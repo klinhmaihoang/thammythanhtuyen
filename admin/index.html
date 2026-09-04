@@ -203,6 +203,40 @@ function bind(id, getter, setter){
   el.addEventListener('input', ()=> setter(el.value));
 }
 
+/* ===== TỰ ĐỘNG SỬA LINK ẢNH SAI CÚ PHÁP =====
+   Nhận diện link "xem file" trên GitHub (dạng .../blob/...) và các kiểu link
+   hay dán nhầm khác, tự chuyển về đúng link ảnh thật để trình duyệt hiển thị được. */
+function normalizeImageUrl(url){
+  if(!url) return url;
+  url = url.trim();
+
+  // Link xem file trên GitHub: github.com/owner/repo/blob/branch/path hoặc /raw/branch/path
+  let m = url.match(/^https?:\/\/github\.com\/([^\/]+)\/([^\/]+)\/(?:blob|raw)\/[^\/]+\/(.+?)(\?.*)?$/i);
+  if(m) return `https://${m[1]}.github.io/${m[2]}/${m[3]}`;
+
+  // Link raw.githubusercontent.com: đã là link ảnh thật, giữ nguyên nhưng bỏ dấu cách/tham số thừa nếu có
+  if(/^https?:\/\/raw\.githubusercontent\.com\//i.test(url)) return url;
+
+  // Google Drive chia sẻ dạng .../file/d/ID/view -> chuyển sang link xem ảnh trực tiếp
+  m = url.match(/^https?:\/\/drive\.google\.com\/file\/d\/([^\/]+)\//i);
+  if(m) return `https://drive.google.com/uc?export=view&id=${m[1]}`;
+
+  return url;
+}
+
+/* Ô ảnh đơn lẻ (không nằm trong danh sách lặp lại): tự sửa link khi rời khỏi ô nhập (blur) */
+function bindImage(id, getter, setter){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.value = getter() || '';
+  el.placeholder = 'Dán link ảnh vào đây — kể cả link xem file trên GitHub cũng được, hệ thống tự sửa';
+  el.addEventListener('blur', ()=>{
+    const fixed = normalizeImageUrl(el.value);
+    el.value = fixed;
+    setter(fixed);
+  });
+}
+
 /* ===== HELPER: danh sách lặp lại (thêm/xoá được) ===== */
 function renderRepeatable(containerId, arr, fields, blankItemFn){
   const container = document.getElementById(containerId);
@@ -219,9 +253,19 @@ function renderRepeatable(containerId, arr, fields, blankItemFn){
         const input = document.createElement(f.type==='textarea' ? 'textarea' : 'input');
         if(f.type==='textarea') input.rows = f.rows || 2;
         input.value = f.isList ? (item[f.key]||[]).join('\n') : (item[f.key]||'');
-        input.addEventListener('input', ()=>{
-          item[f.key] = f.isList ? input.value.split('\n').map(s=>s.trim()).filter(Boolean) : input.value;
-        });
+        if(f.isImage){
+          input.placeholder = 'Dán link ảnh — kể cả link xem file trên GitHub cũng được, hệ thống tự sửa';
+          input.addEventListener('input', ()=>{ item[f.key] = input.value; });
+          input.addEventListener('blur', ()=>{
+            const fixed = normalizeImageUrl(input.value);
+            input.value = fixed;
+            item[f.key] = fixed;
+          });
+        } else {
+          input.addEventListener('input', ()=>{
+            item[f.key] = f.isList ? input.value.split('\n').map(s=>s.trim()).filter(Boolean) : input.value;
+          });
+        }
         wrap.appendChild(label); wrap.appendChild(input);
         card.appendChild(wrap);
       });
@@ -247,7 +291,7 @@ const treatmentsCtrl = renderRepeatable('treatmentsList', data.treatments, [
   {key:'description', label:'Mô tả ngắn (hiện ở Trang chủ)', type:'textarea'},
   {key:'longDescription', label:'Mô tả đầy đủ (hiện ở trang Liệu trình)', type:'textarea'},
   {key:'idealFor', label:'Phù hợp với (mỗi dòng 1 ý)', type:'textarea', isList:true},
-  {key:'image', label:'Link ảnh'}
+  {key:'image', label:'Link ảnh', isImage:true}
 ], ()=>({slug:'dich-vu-moi-'+Date.now(), name:'Dịch vụ mới', subtitle:'', description:'', longDescription:'', technology:'', duration:'', price:'', idealFor:[], image:''}));
 document.getElementById('addTreatment').onclick = treatmentsCtrl.addNew;
 
@@ -275,10 +319,10 @@ bind('wh_sundayClose', ()=>data.workingHours.sundayClose, v=>data.workingHours.s
 bind('b_slotStep', ()=>data.booking.slotStepMinutes, v=>data.booking.slotStepMinutes = parseInt(v,10) || 90);
 
 /* ===== HÌNH ẢNH ===== */
-bind('img_aboutHero', ()=>data.images.aboutHero, v=>data.images.aboutHero=v);
-bind('img_treatmentsHero', ()=>data.images.treatmentsHero, v=>data.images.treatmentsHero=v);
-bind('img_contactHero', ()=>data.images.contactHero, v=>data.images.contactHero=v);
-bind('img_clinicSpace', ()=>data.images.clinicSpace, v=>data.images.clinicSpace=v);
+bindImage('img_aboutHero', ()=>data.images.aboutHero, v=>data.images.aboutHero=v);
+bindImage('img_treatmentsHero', ()=>data.images.treatmentsHero, v=>data.images.treatmentsHero=v);
+bindImage('img_contactHero', ()=>data.images.contactHero, v=>data.images.contactHero=v);
+bindImage('img_clinicSpace', ()=>data.images.clinicSpace, v=>data.images.clinicSpace=v);
 
 const heroSlidesContainer = document.getElementById('heroSlidesList');
 function drawHeroSlides(){
@@ -289,7 +333,13 @@ function drawHeroSlides(){
     wrap.innerHTML = `<label>Ảnh slideshow #${idx+1}</label>`;
     const input = document.createElement('input');
     input.value = src;
+    input.placeholder = 'Dán link ảnh — kể cả link xem file trên GitHub cũng được, hệ thống tự sửa';
     input.addEventListener('input', ()=> data.images.heroSlides[idx] = input.value);
+    input.addEventListener('blur', ()=>{
+      const fixed = normalizeImageUrl(input.value);
+      input.value = fixed;
+      data.images.heroSlides[idx] = fixed;
+    });
     wrap.appendChild(input);
     if(data.images.heroSlides.length > 1){
       const rm = document.createElement('button');
@@ -311,7 +361,7 @@ drawHeroSlides();
 /* ===== ĐỘI NGŨ BÁC SĨ ===== */
 bind('d_name', ()=>data.doctor.name, v=>data.doctor.name=v);
 bind('d_title', ()=>data.doctor.title, v=>data.doctor.title=v);
-bind('d_image', ()=>data.doctor.image, v=>data.doctor.image=v);
+bindImage('d_image', ()=>data.doctor.image, v=>data.doctor.image=v);
 bind('d_bio', ()=>data.doctor.bio, v=>data.doctor.bio=v);
 
 const credCtrl = renderRepeatable('credentialsList', data.doctor.credentials, [
@@ -333,7 +383,7 @@ const testiCtrl = renderRepeatable('testimonialsList', data.testimonials, [
   {key:'name', label:'Tên khách hàng (nên viết tắt để bảo mật)'},
   {key:'result', label:'Dịch vụ đã dùng'},
   {key:'quote', label:'Nội dung cảm nhận', type:'textarea'},
-  {key:'avatar', label:'Link ảnh đại diện'}
+  {key:'avatar', label:'Link ảnh đại diện', isImage:true}
 ], ()=>({name:'', result:'', quote:'', avatar:''}));
 document.getElementById('addTestimonial').onclick = testiCtrl.addNew;
 
