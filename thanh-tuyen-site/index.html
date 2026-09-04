@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thẩm Mỹ Thanh Tuyền — Thanh lịch chuẩn y khoa</title>
+<link rel="icon" type="image/png" href="assets/images/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@400;500;600;700&family=Be+Vietnam+Pro:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header>
+  <div class="nav-wrap">
+    <div class="logo" id="logoText"></div>
+    <nav><ul id="navLinks"></ul></nav>
+    <a href="#" id="navCta" class="btn btn-primary nav-cta">Đặt hẹn tư vấn 1:1</a>
+  </div>
+</header>
+
+<!-- HERO — slideshow ảnh chuyển mượt -->
+<section class="hero">
+  <div class="hero-slider" id="heroSlider"></div>
+  <div class="hero-dots" id="heroDots"></div>
+  <div class="container">
+    <div class="hero-content reveal">
+      <span class="section-label">Clinical Elegance</span>
+      <h1 id="heroTitle"></h1>
+      <p id="heroSub"></p>
+      <div class="hero-btns">
+        <a href="contact/index.html#booking" class="btn btn-primary">Đặt hẹn tư vấn 1:1</a>
+        <a href="treatments/index.html" class="btn btn-ghost-light">Xem phác đồ liệu trình</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEASER: CÂU CHUYỆN THƯƠNG HIỆU -->
+<section class="section">
+  <div class="container">
+    <div class="split-row reverse">
+      <div class="split-img reveal">
+        <img src="" id="storyImg" alt="Không gian phòng khám">
+      </div>
+      <div class="split-text reveal">
+        <span class="section-label">Về Thanh Tuyền</span>
+        <h2 id="storyHeading"></h2>
+        <p id="storyPara1"></p>
+        <a href="about-us/index.html" class="btn btn-outline" style="margin-top:12px;">Tìm hiểu về đội ngũ bác sĩ</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TREATMENTS TEASER -->
+<section class="section alt" id="treatments">
+  <div class="container">
+    <span class="section-label reveal">Phác đồ mũi nhọn</span>
+    <h2 class="section-title reveal">Liệu trình được cá nhân hoá theo từng gương mặt</h2>
+    <p class="section-sub reveal">Mỗi phác đồ đều được thăm khám, đo đạc và tư vấn riêng bởi bác sĩ chuyên khoa trước khi thực hiện.</p>
+    <div class="treatment-grid" id="treatmentGrid"></div>
+    <div class="reveal" style="text-align:center; margin-top:44px;">
+      <a href="treatments/index.html" class="btn btn-outline">Xem toàn bộ liệu trình</a>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section" id="testimonials">
+  <div class="container">
+    <span class="section-label reveal">Cảm nhận thực tế</span>
+    <h2 class="section-title reveal">Khách hàng nói gì sau hành trình cùng Thanh Tuyền</h2>
+    <div class="testi-grid" id="testiGrid"></div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section class="section alt">
+  <div class="container reveal" style="text-align:center;">
+    <h2 class="section-title" style="margin-bottom:24px;">Sẵn sàng cho buổi thăm khám riêng tư?</h2>
+    <a href="contact/index.html#booking" class="btn btn-primary">Đặt hẹn tư vấn 1:1</a>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h4 id="footerClinicName" style="font-family:var(--font-head); font-size:22px;"></h4>
+        <p id="footerTagline"></p>
+        <div class="social-row" id="socialRow"></div>
+      </div>
+      <div><h4>Hệ thống phòng khám</h4><ul id="footerAddresses"></ul></div>
+      <div><h4>Liên hệ</h4><ul id="footerContact"></ul></div>
+    </div>
+    <div class="legal-line" id="legalLine"></div>
+  </div>
+</footer>
+
+<script src="assets/clinic-data.js"></script>
+<script src="assets/site.js"></script>
+<script>
+  renderHeader('home', '');
+  initHeroSlider();
+  document.getElementById('heroTitle').textContent = CLINIC_DATA.hero.title;
+  document.getElementById('heroSub').textContent = CLINIC_DATA.hero.subtitle;
+
+  document.getElementById('storyImg').src = CLINIC_DATA.images.clinicSpace;
+  document.getElementById('storyHeading').textContent = CLINIC_DATA.story.heading;
+  document.getElementById('storyPara1').textContent = CLINIC_DATA.story.paragraphs[0];
+
+  renderTreatments('treatmentGrid', { limit: 4, basePath: '' });
+  renderTestimonials('testiGrid');
+  renderFooter('');
+  initReveal();
+</script>
+</body>
+</html>

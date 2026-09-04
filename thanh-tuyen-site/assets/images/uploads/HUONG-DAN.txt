@@ -1,0 +1,10 @@
+Thư mục này dùng để chứa ảnh THẬT của phòng khám (không gian, bác sĩ, khách hàng...).
+
+Cách dùng:
+1. Nén ảnh nhẹ bớt trước khi tải lên (khuyên dùng squoosh.app).
+2. Upload ảnh vào đúng thư mục này qua GitHub (Add file > Upload files).
+3. Lấy link dạng:
+   https://ten-tai-khoan.github.io/ten-repo/assets/images/uploads/ten-file.jpg
+4. Dán link đó vào ô ảnh tương ứng trong trang /admin/.
+
+Không dùng link "raw.githubusercontent.com" hay link "Download" trên GitHub — chỉ dùng đúng link website dạng github.io ở trên.
