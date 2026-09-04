@@ -153,7 +153,7 @@ const CLINIC_DATA = {
 
   /* ===== ĐẶT LỊCH — NỐI GOOGLE SHEET (xem hướng dẫn Apps Script) ===== */
   booking: {
-    apiUrl: "https://script.google.com/macros/s/AKfycbzmW4Mx-QRnlPKcsCRmCpgGLTPimF83urTBseJ9xh4/dev",
+    apiUrl: "https://script.google.com/macros/s/AKfycbzkCnwrp2dF-Ray7-qJ2dQK61Dy1mIqa1HAHQELHKxgCZ_OlnxD4XgEd2hKPryKTMsn/exec",
     slotStepMinutes: 90 // cách nhau 1 tiếng 30 phút; giờ mở/đóng cửa lấy theo workingHours ở trên, tự đổi theo Chủ nhật/ngày thường
   }
 };
