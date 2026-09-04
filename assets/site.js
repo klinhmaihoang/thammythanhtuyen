@@ -19,8 +19,9 @@ function iconSvg(name){
 /* basePath: '' khi ở trang gốc (index.html), '../' khi ở trong thư mục con */
 function renderHeader(activeId, basePath){
   basePath = basePath || '';
+  /* Tạm thời chỉ hiện chữ (đỏ toàn bộ) — thay bằng logo ảnh thật khi có, xem ghi chú cuối file. */
   document.getElementById('logoText').innerHTML =
-    `<a href="${basePath}index.html">${CLINIC_DATA.clinicName.replace(' ', ' <span>')}</span></a>`;
+    `<a href="${basePath}index.html" style="color:var(--accent-wine);">${CLINIC_DATA.clinicName}</a>`;
   const nav = document.getElementById('navLinks');
   CLINIC_DATA.nav.forEach(item=>{
     const li = document.createElement('li');
@@ -43,9 +44,10 @@ function renderFooter(basePath){
     <a class="social-btn" href="${c.zaloUrl}" target="_blank" rel="noopener" aria-label="Zalo">${iconSvg('zalo')}</a>
     <a class="social-btn" href="${c.phoneHref}" aria-label="Gọi điện">${iconSvg('phone')}</a>`;
 
+  const wh = CLINIC_DATA.workingHours;
   document.getElementById('footerAddresses').innerHTML = CLINIC_DATA.addresses
     .map(a=>`<li>${iconSvg('pin')} <strong>${a.branch}</strong> — ${a.address}</li>`).join('') +
-    `<li style="margin-top:8px;">${CLINIC_DATA.workingHours.weekday}<br>${CLINIC_DATA.workingHours.sunday}</li>`;
+    `<li style="margin-top:8px;">${wh.weekdayOpen} – ${wh.weekdayClose} (Thứ 2 – Thứ 7)<br>${wh.sundayOpen} – ${wh.sundayClose} (Chủ nhật)</li>`;
 
   document.getElementById('footerContact').innerHTML = `
     <li>${iconSvg('phone')} Hotline: <a href="${c.hotlineHref}">${c.hotline}</a></li>
@@ -157,31 +159,50 @@ function renderYoutube(containerId){
 /* ===== ĐẶT LỊCH — nối Google Sheet ===== */
 let selectedTime = null;
 
-function buildSlotsForHours(bookedTimes){
+/* Chuyển "08:00" -> 480 phút; ngược lại ở hàm bên dưới */
+function timeStrToMinutes(str){ const [h,m] = str.split(':').map(Number); return h*60+m; }
+function minutesToTimeStr(mins){ const h = Math.floor(mins/60), m = mins%60; return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`; }
+
+/* Lấy giờ mở/đóng cửa theo đúng ngày được chọn (Chủ nhật khác ngày thường) */
+function getHoursForDate(dateStr){
+  const d = new Date(dateStr + 'T00:00:00');
+  const isSunday = d.getDay() === 0;
+  const wh = CLINIC_DATA.workingHours;
+  return isSunday
+    ? { open: wh.sundayOpen, close: wh.sundayClose }
+    : { open: wh.weekdayOpen, close: wh.weekdayClose };
+}
+
+function buildSlotsForHours(dateStr, bookedTimes){
   const wrap = document.getElementById('timeSlots');
   if(!wrap) return;
   wrap.innerHTML = '';
   selectedTime = null;
-  const {openHour, closeHour, slotStepMinutes} = CLINIC_DATA.booking;
-  for(let h=openHour; h<=closeHour; h++){
-    for(let m=0; m<60; m+=slotStepMinutes){
-      const label = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`;
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'slot-btn';
-      btn.textContent = label;
-      if(bookedTimes.includes(label)){
-        btn.classList.add('disabled');
-        btn.disabled = true;
-      } else {
-        btn.onclick = ()=>{
-          document.querySelectorAll('.slot-btn').forEach(b=>b.classList.remove('active'));
-          btn.classList.add('active');
-          selectedTime = label;
-        };
-      }
-      wrap.appendChild(btn);
+  const { open, close } = getHoursForDate(dateStr);
+  const step = CLINIC_DATA.booking.slotStepMinutes || 90;
+  const openMin = timeStrToMinutes(open);
+  const closeMin = timeStrToMinutes(close);
+
+  for(let t = openMin; t <= closeMin; t += step){
+    const label = minutesToTimeStr(t);
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'slot-btn';
+    btn.textContent = label;
+    if(bookedTimes.includes(label)){
+      btn.classList.add('disabled');
+      btn.disabled = true;
+    } else {
+      btn.onclick = ()=>{
+        document.querySelectorAll('.slot-btn').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        selectedTime = label;
+      };
     }
+    wrap.appendChild(btn);
+  }
+  if(wrap.children.length === 0){
+    wrap.innerHTML = '<span style="font-size:13px;color:var(--accent-wine);">Ngày này phòng khám không có khung giờ nào — vui lòng chọn ngày khác.</span>';
   }
 }
 
@@ -192,14 +213,14 @@ async function onDateChange(){
   const apiUrl = CLINIC_DATA.booking.apiUrl;
   if(!apiUrl || apiUrl.indexOf('DÁN_WEB_APP_URL') !== -1){
     wrap.innerHTML = '<span style="font-size:13px;color:var(--accent-wine);">Chưa kết nối Google Sheet — dán Web App URL vào CLINIC_DATA.booking.apiUrl</span>';
-    buildSlotsForHours([]);
+    buildSlotsForHours(date, []);
     return;
   }
   wrap.innerHTML = '<span style="font-size:13px;opacity:.6;">Đang kiểm tra lịch trống...</span>';
   try{
     const res = await fetch(`${apiUrl}?date=${date}`);
     const data = await res.json();
-    buildSlotsForHours(data.bookedTimes || []);
+    buildSlotsForHours(date, data.bookedTimes || []);
   }catch(err){
     wrap.innerHTML = '<span style="font-size:13px;color:var(--accent-wine);">Không tải được lịch trống, vui lòng thử lại.</span>';
   }

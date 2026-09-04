@@ -141,7 +141,10 @@ const CLINIC_DATA = {
     { branch: "Chi nhánh 1", address: "247 Đường 3/2, P.10, Q.10, TP.HCM" },
     { branch: "Chi nhánh 2", address: "1661 Trần Hưng Đạo, Long Xuyên, An Giang" }
   ],
-  workingHours: { weekday: "08:00 – 19:30 (Thứ 2 – Thứ 7)", sunday: "08:00 – 17:00 (Chủ nhật)" },
+  workingHours: {
+    weekdayOpen: "08:00", weekdayClose: "19:30",
+    sundayOpen: "08:00", sundayClose: "17:00"
+  },
 
   legal: [
     "CÔNG TY TNHH THANH TUYỀN SIGNATURE — GCN ĐKKD số 0318365757 · Giấy phép hoạt động khám chữa bệnh số 09524/HCM-GPHD (23/08/2024)",
@@ -151,8 +154,6 @@ const CLINIC_DATA = {
   /* ===== ĐẶT LỊCH — NỐI GOOGLE SHEET (xem hướng dẫn Apps Script) ===== */
   booking: {
     apiUrl: "DÁN_WEB_APP_URL_VÀO_ĐÂY",
-    openHour: 8,
-    closeHour: 19,
-    slotStepMinutes: 60
+    slotStepMinutes: 90 // cách nhau 1 tiếng 30 phút; giờ mở/đóng cửa lấy theo workingHours ở trên, tự đổi theo Chủ nhật/ngày thường
   }
 };

@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Thẩm Mỹ Thanh Tuyền</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@400;500;600;700&family=Be+Vietnam+Pro:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  body{padding-top:90px;}
+  .admin-header{position:fixed; top:0; left:0; right:0; z-index:100; background:rgba(250,246,240,.9); backdrop-filter:blur(14px); border-bottom:1px solid rgba(58,44,34,.1); padding:16px 24px;}
+  .admin-header .row{max-width:1140px; margin:0 auto; display:flex; align-items:center; justify-content:space-between;}
+  .admin-tabs{display:flex; gap:6px; flex-wrap:wrap; margin-bottom:36px; position:sticky; top:82px; background:var(--bg-sand); z-index:10; padding:10px 0;}
+  .admin-tab{padding:9px 18px; border-radius:999px; border:1px solid rgba(58,44,34,.2); font-size:13.5px; cursor:pointer; background:#fff;}
+  .admin-tab.active{background:var(--accent-wine); color:#fff; border-color:var(--accent-wine);}
+  .admin-panel{display:none;}
+  .admin-panel.active{display:block;}
+  .admin-card{background:#fff; border-radius:16px; padding:22px; margin-bottom:16px; box-shadow:0 10px 24px -18px rgba(58,44,34,.25); position:relative;}
+  .admin-field{margin-bottom:12px;}
+  .admin-field label{font-size:12.5px; font-weight:500; margin-bottom:5px; display:block; color:#5b4a3d;}
+  .admin-field input, .admin-field textarea{width:100%; padding:10px 12px; border-radius:10px; border:1px solid rgba(58,44,34,.2); font-family:var(--font-body); font-size:14px; background:var(--bg-ivory);}
+  .admin-grid2{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  @media(max-width:600px){ .admin-grid2{grid-template-columns:1fr;} }
+  .admin-remove{margin-top:6px; font-size:13px; padding:8px 16px; border-color:var(--accent-wine); color:var(--accent-wine);}
+  .admin-add{margin-bottom:36px;}
+  .admin-save-bar{position:sticky; bottom:20px; background:var(--text-main); color:var(--bg-ivory); border-radius:18px; padding:22px 26px; margin-top:20px; box-shadow:0 20px 50px -20px rgba(0,0,0,.4);}
+  .admin-save-bar h4{color:var(--accent-brass); font-family:var(--font-body); font-size:15px; margin-bottom:6px; font-weight:500;}
+  .admin-save-bar p{font-size:13px; opacity:.85; margin-bottom:14px;}
+  .admin-warn{background:rgba(122,46,42,.08); border:1px solid rgba(122,46,42,.25); border-radius:12px; padding:14px 16px; font-size:13px; color:var(--accent-wine); margin-bottom:16px;}
+  details summary{cursor:pointer; font-size:14px; font-weight:500; padding:10px 0;}
+  #ghStatus, #exportStatus{font-size:13px; margin-top:10px; min-height:16px;}
+</style>
+</head>
+<body>
+
+<div class="admin-header">
+  <div class="row">
+    <div class="logo" style="color:var(--accent-wine); font-size:20px;">Thanh Tuyền <span style="color:var(--text-main); font-weight:400; font-size:14px;">/ Admin</span></div>
+    <a href="../index.html" class="btn btn-outline" style="padding:9px 18px; font-size:13px;">← Về trang chủ</a>
+  </div>
+</div>
+
+<div class="container" style="padding-top:20px;">
+  <span class="section-label">Bảng điều khiển nội dung</span>
+  <h1 class="section-title" style="font-size:32px;">Chỉnh sửa nội dung website</h1>
+  <p class="section-sub" style="margin-bottom:24px;">Sửa xong, cuộn xuống cuối trang để lưu. Trang này KHÔNG hiển thị công khai trên menu — chỉ ai có đường dẫn mới vào được, nhưng vẫn nên giữ kín link này.</p>
+
+  <div class="admin-tabs" id="tabBar"></div>
+
+  <!-- ===== TAB: DỊCH VỤ & GIÁ ===== -->
+  <div class="admin-panel" data-panel="treatments">
+    <div id="treatmentsList"></div>
+    <button type="button" class="btn btn-outline admin-add" id="addTreatment">+ Thêm dịch vụ mới</button>
+  </div>
+
+  <!-- ===== TAB: LIÊN HỆ ===== -->
+  <div class="admin-panel" data-panel="contact">
+    <div class="admin-card">
+      <div class="admin-grid2">
+        <div class="admin-field"><label>Hotline (hiển thị)</label><input id="c_hotline"></div>
+        <div class="admin-field"><label>Hotline (số gọi, không dấu cách — vd 19000306)</label><input id="c_hotlineHref"></div>
+        <div class="admin-field"><label>Số điện thoại / Zalo (hiển thị)</label><input id="c_phone"></div>
+        <div class="admin-field"><label>Link gọi điện (vd tel:0909415066)</label><input id="c_phoneHref"></div>
+        <div class="admin-field"><label>Email</label><input id="c_email"></div>
+        <div class="admin-field"><label>Link Facebook</label><input id="c_facebookUrl"></div>
+        <div class="admin-field"><label>Link Zalo (vd https://zalo.me/0909415066)</label><input id="c_zaloUrl"></div>
+      </div>
+      <div class="admin-field"><label>Link nhúng Google Maps (mục "Chia sẻ" → "Nhúng bản đồ" trên Google Maps, lấy phần URL trong src="...")</label><input id="c_mapEmbedUrl"></div>
+    </div>
+  </div>
+
+  <!-- ===== TAB: ĐỊA CHỈ & GIỜ MỞ CỬA ===== -->
+  <div class="admin-panel" data-panel="addresses">
+    <div id="addressesList"></div>
+    <button type="button" class="btn btn-outline admin-add" id="addAddress">+ Thêm chi nhánh</button>
+
+    <div class="admin-card">
+      <span class="section-label" style="margin-bottom:14px;">Giờ mở cửa</span>
+      <div class="admin-grid2">
+        <div class="admin-field"><label>Giờ mở cửa — Thứ 2 đến Thứ 7</label><input id="wh_weekdayOpen" placeholder="08:00"></div>
+        <div class="admin-field"><label>Giờ đóng cửa — Thứ 2 đến Thứ 7</label><input id="wh_weekdayClose" placeholder="19:30"></div>
+        <div class="admin-field"><label>Giờ mở cửa — Chủ nhật</label><input id="wh_sundayOpen" placeholder="08:00"></div>
+        <div class="admin-field"><label>Giờ đóng cửa — Chủ nhật</label><input id="wh_sundayClose" placeholder="17:00"></div>
+      </div>
+      <div class="admin-field" style="margin-top:8px;">
+        <label>Khoảng cách giữa các khung giờ đặt lịch (phút — vd 90 = 1 tiếng 30)</label>
+        <input id="b_slotStep" style="max-width:160px;">
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TAB: HÌNH ẢNH ===== -->
+  <div class="admin-panel" data-panel="images">
+    <div class="admin-card">
+      <p style="font-size:13px; color:#5b4a3d; margin-bottom:14px;">Dán link ảnh (Unsplash hoặc bất kỳ link ảnh https nào) vào từng ô bên dưới để thay ảnh tương ứng trên web.</p>
+      <div class="admin-field"><label>Ảnh trang Giới thiệu (banner đầu trang)</label><input id="img_aboutHero"></div>
+      <div class="admin-field"><label>Ảnh trang Liệu trình (banner đầu trang)</label><input id="img_treatmentsHero"></div>
+      <div class="admin-field"><label>Ảnh trang Liên hệ (banner đầu trang)</label><input id="img_contactHero"></div>
+      <div class="admin-field"><label>Ảnh không gian phòng khám (dùng ở Trang chủ)</label><input id="img_clinicSpace"></div>
+    </div>
+    <div class="admin-card">
+      <span class="section-label" style="margin-bottom:14px;">Ảnh slideshow Trang chủ (3 ảnh chuyển động)</span>
+      <div id="heroSlidesList"></div>
+    </div>
+  </div>
+
+  <!-- ===== TAB: ĐỘI NGŨ BÁC SĨ ===== -->
+  <div class="admin-panel" data-panel="doctor">
+    <div class="admin-card">
+      <div class="admin-grid2">
+        <div class="admin-field"><label>Tên bác sĩ</label><input id="d_name"></div>
+        <div class="admin-field"><label>Chức danh</label><input id="d_title"></div>
+      </div>
+      <div class="admin-field"><label>Ảnh bác sĩ (link)</label><input id="d_image"></div>
+      <div class="admin-field"><label>Giới thiệu ngắn</label><textarea id="d_bio" rows="2"></textarea></div>
+    </div>
+    <span class="section-label">Chứng chỉ / cam kết</span>
+    <div id="credentialsList"></div>
+    <button type="button" class="btn btn-outline admin-add" id="addCredential">+ Thêm mục</button>
+  </div>
+
+  <!-- ===== TAB: VIDEO YOUTUBE ===== -->
+  <div class="admin-panel" data-panel="youtube">
+    <div class="admin-card">
+      <div class="admin-field"><label>Link kênh Youtube</label><input id="yt_channelUrl"></div>
+    </div>
+    <div id="videosList"></div>
+    <button type="button" class="btn btn-outline admin-add" id="addVideo">+ Thêm video</button>
+  </div>
+
+  <!-- ===== TAB: CẢM NHẬN KHÁCH HÀNG ===== -->
+  <div class="admin-panel" data-panel="testimonials">
+    <div id="testimonialsList"></div>
+    <button type="button" class="btn btn-outline admin-add" id="addTestimonial">+ Thêm cảm nhận</button>
+  </div>
+
+  <!-- ===== LƯU THAY ĐỔI ===== -->
+  <div class="admin-save-bar">
+    <h4>1. Cách đơn giản — tải file rồi tự thay lên GitHub</h4>
+    <p>Bấm nút bên dưới để tải file <code>clinic-data.js</code> mới, sau đó vào GitHub → mở file <code>assets/clinic-data.js</code> → bấm biểu tượng cây bút → xoá hết nội dung cũ → dán nội dung file mới vào → Commit.</p>
+    <button type="button" class="btn btn-primary" id="exportBtn">Tải file clinic-data.js mới</button>
+    <div id="exportStatus"></div>
+
+    <details style="margin-top:22px;">
+      <summary style="color:var(--accent-brass);">2. Cách nhanh hơn — lưu thẳng lên GitHub bằng 1 nút bấm (nâng cao)</summary>
+      <div class="admin-warn" style="margin-top:12px;">
+        Cần tạo "Personal Access Token" trên GitHub 1 lần (xem hướng dẫn Claude gửi kèm bên dưới khung chat). Token giống như mật khẩu — không chia sẻ, không dùng máy công cộng. Token chỉ dùng cho trình duyệt này, không được lưu lại.
+      </div>
+      <div class="admin-grid2">
+        <div class="admin-field"><label>Tên chủ tài khoản GitHub (owner)</label><input id="ghOwner" placeholder="vd: thanhtuyen-clinic"></div>
+        <div class="admin-field"><label>Tên repository</label><input id="ghRepo" placeholder="vd: thanh-tuyen-website"></div>
+        <div class="admin-field"><label>Branch</label><input id="ghBranch" value="main"></div>
+        <div class="admin-field"><label>Personal Access Token</label><input id="ghToken" type="password" placeholder="ghp_..."></div>
+      </div>
+      <button type="button" class="btn btn-primary" id="ghSaveBtn">Lưu thẳng lên GitHub</button>
+      <div id="ghStatus"></div>
+    </details>
+  </div>
+</div>
+
+<script src="../assets/clinic-data.js"></script>
+<script>
+/* Bản sao dữ liệu để chỉnh sửa trong trang Admin — không đụng vào file gốc cho đến khi bấm Lưu/Tải */
+let data = JSON.parse(JSON.stringify(CLINIC_DATA));
+
+/* ===== TAB SWITCHING ===== */
+const tabs = [
+  {id:'treatments', label:'Dịch vụ & giá'},
+  {id:'contact', label:'Liên hệ'},
+  {id:'addresses', label:'Địa chỉ & giờ mở cửa'},
+  {id:'images', label:'Hình ảnh'},
+  {id:'doctor', label:'Đội ngũ bác sĩ'},
+  {id:'youtube', label:'Video Youtube'},
+  {id:'testimonials', label:'Cảm nhận khách hàng'}
+];
+const tabBar = document.getElementById('tabBar');
+tabs.forEach((t,i)=>{
+  const btn = document.createElement('button');
+  btn.type='button'; btn.className='admin-tab' + (i===0?' active':'');
+  btn.textContent = t.label;
+  btn.onclick = ()=>{
+    document.querySelectorAll('.admin-tab').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.admin-panel').forEach(p=>p.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelector(`.admin-panel[data-panel="${t.id}"]`).classList.add('active');
+  };
+  tabBar.appendChild(btn);
+});
+document.querySelector('.admin-panel[data-panel="treatments"]').classList.add('active');
+
+/* ===== HELPER: form đơn giản 1-1 (không lặp) ===== */
+function bind(id, getter, setter){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.value = getter() || '';
+  el.addEventListener('input', ()=> setter(el.value));
+}
+
+/* ===== HELPER: danh sách lặp lại (thêm/xoá được) ===== */
+function renderRepeatable(containerId, arr, fields, blankItemFn){
+  const container = document.getElementById(containerId);
+  function draw(){
+    container.innerHTML = '';
+    arr.forEach((item, idx)=>{
+      const card = document.createElement('div');
+      card.className = 'admin-card';
+      fields.forEach(f=>{
+        const wrap = document.createElement('div');
+        wrap.className = 'admin-field';
+        const label = document.createElement('label');
+        label.textContent = f.label;
+        const input = document.createElement(f.type==='textarea' ? 'textarea' : 'input');
+        if(f.type==='textarea') input.rows = f.rows || 2;
+        input.value = f.isList ? (item[f.key]||[]).join('\n') : (item[f.key]||'');
+        input.addEventListener('input', ()=>{
+          item[f.key] = f.isList ? input.value.split('\n').map(s=>s.trim()).filter(Boolean) : input.value;
+        });
+        wrap.appendChild(label); wrap.appendChild(input);
+        card.appendChild(wrap);
+      });
+      const rm = document.createElement('button');
+      rm.type='button'; rm.className='btn btn-outline admin-remove';
+      rm.textContent = 'Xoá mục này';
+      rm.onclick = ()=>{ arr.splice(idx,1); draw(); };
+      card.appendChild(rm);
+      container.appendChild(card);
+    });
+  }
+  draw();
+  return { addNew: ()=>{ arr.push(blankItemFn()); draw(); } };
+}
+
+/* ===== DỊCH VỤ & GIÁ ===== */
+const treatmentsCtrl = renderRepeatable('treatmentsList', data.treatments, [
+  {key:'name', label:'Tên gói (vd: Nét Thanh)'},
+  {key:'subtitle', label:'Tên chuyên môn (vd: Nâng mũi cấu trúc)'},
+  {key:'price', label:'Giá'},
+  {key:'duration', label:'Thời gian thực hiện'},
+  {key:'technology', label:'Công nghệ / kỹ thuật sử dụng'},
+  {key:'description', label:'Mô tả ngắn (hiện ở Trang chủ)', type:'textarea'},
+  {key:'longDescription', label:'Mô tả đầy đủ (hiện ở trang Liệu trình)', type:'textarea'},
+  {key:'idealFor', label:'Phù hợp với (mỗi dòng 1 ý)', type:'textarea', isList:true},
+  {key:'image', label:'Link ảnh'}
+], ()=>({slug:'dich-vu-moi-'+Date.now(), name:'Dịch vụ mới', subtitle:'', description:'', longDescription:'', technology:'', duration:'', price:'', idealFor:[], image:''}));
+document.getElementById('addTreatment').onclick = treatmentsCtrl.addNew;
+
+/* ===== LIÊN HỆ ===== */
+bind('c_hotline', ()=>data.contact.hotline, v=>data.contact.hotline=v);
+bind('c_hotlineHref', ()=>data.contact.hotlineHref, v=>data.contact.hotlineHref=v);
+bind('c_phone', ()=>data.contact.phone, v=>data.contact.phone=v);
+bind('c_phoneHref', ()=>data.contact.phoneHref, v=>data.contact.phoneHref=v);
+bind('c_email', ()=>data.contact.email, v=>data.contact.email=v);
+bind('c_facebookUrl', ()=>data.contact.facebookUrl, v=>data.contact.facebookUrl=v);
+bind('c_zaloUrl', ()=>data.contact.zaloUrl, v=>data.contact.zaloUrl=v);
+bind('c_mapEmbedUrl', ()=>data.contact.mapEmbedUrl, v=>data.contact.mapEmbedUrl=v);
+
+/* ===== ĐỊA CHỈ & GIỜ MỞ CỬA ===== */
+const addressesCtrl = renderRepeatable('addressesList', data.addresses, [
+  {key:'branch', label:'Tên chi nhánh'},
+  {key:'address', label:'Địa chỉ đầy đủ'}
+], ()=>({branch:'Chi nhánh mới', address:''}));
+document.getElementById('addAddress').onclick = addressesCtrl.addNew;
+
+bind('wh_weekdayOpen', ()=>data.workingHours.weekdayOpen, v=>data.workingHours.weekdayOpen=v);
+bind('wh_weekdayClose', ()=>data.workingHours.weekdayClose, v=>data.workingHours.weekdayClose=v);
+bind('wh_sundayOpen', ()=>data.workingHours.sundayOpen, v=>data.workingHours.sundayOpen=v);
+bind('wh_sundayClose', ()=>data.workingHours.sundayClose, v=>data.workingHours.sundayClose=v);
+bind('b_slotStep', ()=>data.booking.slotStepMinutes, v=>data.booking.slotStepMinutes = parseInt(v,10) || 90);
+
+/* ===== HÌNH ẢNH ===== */
+bind('img_aboutHero', ()=>data.images.aboutHero, v=>data.images.aboutHero=v);
+bind('img_treatmentsHero', ()=>data.images.treatmentsHero, v=>data.images.treatmentsHero=v);
+bind('img_contactHero', ()=>data.images.contactHero, v=>data.images.contactHero=v);
+bind('img_clinicSpace', ()=>data.images.clinicSpace, v=>data.images.clinicSpace=v);
+
+const heroSlidesContainer = document.getElementById('heroSlidesList');
+function drawHeroSlides(){
+  heroSlidesContainer.innerHTML = '';
+  data.images.heroSlides.forEach((src, idx)=>{
+    const wrap = document.createElement('div');
+    wrap.className = 'admin-field';
+    wrap.innerHTML = `<label>Ảnh slideshow #${idx+1}</label>`;
+    const input = document.createElement('input');
+    input.value = src;
+    input.addEventListener('input', ()=> data.images.heroSlides[idx] = input.value);
+    wrap.appendChild(input);
+    if(data.images.heroSlides.length > 1){
+      const rm = document.createElement('button');
+      rm.type='button'; rm.className='btn btn-outline admin-remove'; rm.style.marginLeft='0';
+      rm.textContent = 'Xoá ảnh này';
+      rm.onclick = ()=>{ data.images.heroSlides.splice(idx,1); drawHeroSlides(); };
+      wrap.appendChild(rm);
+    }
+    heroSlidesContainer.appendChild(wrap);
+  });
+  const addBtn = document.createElement('button');
+  addBtn.type='button'; addBtn.className='btn btn-outline';
+  addBtn.textContent='+ Thêm ảnh slideshow';
+  addBtn.onclick = ()=>{ data.images.heroSlides.push(''); drawHeroSlides(); };
+  heroSlidesContainer.appendChild(addBtn);
+}
+drawHeroSlides();
+
+/* ===== ĐỘI NGŨ BÁC SĨ ===== */
+bind('d_name', ()=>data.doctor.name, v=>data.doctor.name=v);
+bind('d_title', ()=>data.doctor.title, v=>data.doctor.title=v);
+bind('d_image', ()=>data.doctor.image, v=>data.doctor.image=v);
+bind('d_bio', ()=>data.doctor.bio, v=>data.doctor.bio=v);
+
+const credCtrl = renderRepeatable('credentialsList', data.doctor.credentials, [
+  {key:'title', label:'Tiêu đề'},
+  {key:'desc', label:'Mô tả', type:'textarea'}
+], ()=>({title:'Cam kết mới', desc:''}));
+document.getElementById('addCredential').onclick = credCtrl.addNew;
+
+/* ===== VIDEO YOUTUBE ===== */
+bind('yt_channelUrl', ()=>data.youtube.channelUrl, v=>data.youtube.channelUrl=v);
+const videosCtrl = renderRepeatable('videosList', data.youtube.videos, [
+  {key:'title', label:'Tiêu đề video'},
+  {key:'videoId', label:'Youtube Video ID (phần sau watch?v= trong link video)'}
+], ()=>({title:'Video mới', videoId:''}));
+document.getElementById('addVideo').onclick = videosCtrl.addNew;
+
+/* ===== CẢM NHẬN KHÁCH HÀNG ===== */
+const testiCtrl = renderRepeatable('testimonialsList', data.testimonials, [
+  {key:'name', label:'Tên khách hàng (nên viết tắt để bảo mật)'},
+  {key:'result', label:'Dịch vụ đã dùng'},
+  {key:'quote', label:'Nội dung cảm nhận', type:'textarea'},
+  {key:'avatar', label:'Link ảnh đại diện'}
+], ()=>({name:'', result:'', quote:'', avatar:''}));
+document.getElementById('addTestimonial').onclick = testiCtrl.addNew;
+
+/* ===== XUẤT FILE clinic-data.js ===== */
+function buildFileContent(){
+  return "/* File này được xuất từ trang Admin — thay thế toàn bộ nội dung file assets/clinic-data.js hiện tại bằng nội dung này. */\nconst CLINIC_DATA = " + JSON.stringify(data, null, 2) + ";\n";
+}
+document.getElementById('exportBtn').onclick = ()=>{
+  const blob = new Blob([buildFileContent()], {type:'text/javascript'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'clinic-data.js'; a.click();
+  URL.revokeObjectURL(url);
+  const st = document.getElementById('exportStatus');
+  st.textContent = 'Đã tải xong — giờ vào GitHub để thay file cũ bằng file này.';
+  st.style.color = 'green';
+};
+
+/* ===== LƯU THẲNG LÊN GITHUB (nâng cao) ===== */
+document.getElementById('ghSaveBtn').onclick = async ()=>{
+  const owner = document.getElementById('ghOwner').value.trim();
+  const repo = document.getElementById('ghRepo').value.trim();
+  const branch = document.getElementById('ghBranch').value.trim() || 'main';
+  const token = document.getElementById('ghToken').value.trim();
+  const st = document.getElementById('ghStatus');
+  if(!owner || !repo || !token){
+    st.textContent = 'Vui lòng điền đủ Owner, Repo và Token.'; st.style.color = 'var(--accent-wine)'; return;
+  }
+  st.textContent = 'Đang lưu...'; st.style.color = '#5b4a3d';
+  const path = 'assets/clinic-data.js';
+  const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
+  try{
+    const getRes = await fetch(`${apiUrl}?ref=${branch}`, { headers:{ Authorization:'token '+token, Accept:'application/vnd.github+json' }});
+    if(!getRes.ok) throw new Error('Không tìm thấy file — kiểm tra lại Owner/Repo/Branch/Token.');
+    const fileInfo = await getRes.json();
+    const content = buildFileContent();
+    const encoded = btoa(unescape(encodeURIComponent(content)));
+    const putRes = await fetch(apiUrl, {
+      method: 'PUT',
+      headers: { Authorization:'token '+token, Accept:'application/vnd.github+json' },
+      body: JSON.stringify({ message:'Cập nhật nội dung từ trang Admin', content: encoded, sha: fileInfo.sha, branch })
+    });
+    if(!putRes.ok){ const err = await putRes.json(); throw new Error(err.message || 'Lưu thất bại'); }
+    st.textContent = 'Đã lưu thành công! Website sẽ cập nhật sau khoảng 1 phút.';
+    st.style.color = 'green';
+  }catch(err){
+    st.textContent = 'Lỗi: ' + err.message;
+    st.style.color = 'var(--accent-wine)';
+  }
+};
+</script>
+</body>
+</html>
