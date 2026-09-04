@@ -103,7 +103,7 @@ const CLINIC_DATA = {
         "Đã nâng mũi trước đó, cần chỉnh sửa lại",
         "Mong muốn form mũi bền, tự nhiên lâu dài"
       ],
-      "image": "https://github.com/klinhmaihoang/thammythanhtuyen/blob/main/assets/images/uploads/sua_mui.png"
+      "image": "https://klinhmaihoang.github.io/thammythanhtuyen/assets/images/uploads/sua_mui.png"
     },
     {
       "slug": "mat-biec",
@@ -119,7 +119,7 @@ const CLINIC_DATA = {
         "Sụp mi nhẹ đến trung bình",
         "Mắt một mí, hai mí không đều"
       ],
-      "image": "https://github.com/klinhmaihoang/thammythanhtuyen/blob/main/assets/images/uploads/mi_mat.jpg"
+      "image": "https://klinhmaihoang.github.io/thammythanhtuyen/assets/images/uploads/mi_mat.jpg"
     },
     {
       "slug": "duong-net-hai-hoa",
@@ -134,7 +134,7 @@ const CLINIC_DATA = {
         "Cung mày sụp, gương mặt trông mệt mỏi",
         "Cằm ngắn/lẹm, tỉ lệ gương mặt chưa cân đối"
       ],
-      "image": "https://github.com/klinhmaihoang/thammythanhtuyen/blob/main/assets/images/uploads/khuon_mat.jpg"
+      "image": "https://klinhmaihoang.github.io/thammythanhtuyen/assets/images/uploads/khuon_mat.jpg"
     },
     {
       "slug": "signature-cham-soc",
@@ -149,7 +149,7 @@ const CLINIC_DATA = {
         "Cần phục hồi da sau phẫu thuật",
         "Muốn chăm sóc da định kỳ, thư giãn"
       ],
-      "image": "https://github.com/klinhmaihoang/thammythanhtuyen/blob/main/assets/images/uploads/tham-my-voc-dang.jpg"
+      "image": "https://klinhmaihoang.github.io/thammythanhtuyen/assets/images/uploads/tham-my-voc-dang.jpg"
     }
   ],
   "testimonials": [
