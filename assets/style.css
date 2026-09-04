@@ -1,3 +1,21 @@
+@font-face{
+  font-family:'Balerno';
+  src:url('fonts/MTD_Balerno_Light.otf') format('opentype');
+  font-weight:300;
+  font-display:swap;
+}
+@font-face{
+  font-family:'Balerno';
+  src:url('fonts/MTD_Balerno_Regular.otf') format('opentype');
+  font-weight:400;
+  font-display:swap;
+}
+@font-face{
+  font-family:'Balerno';
+  src:url('fonts/MTD_Balerno_Bold.otf') format('opentype');
+  font-weight:700;
+  font-display:swap;
+}
 :root{
   --bg-sand:#F3E9DC;
   --bg-ivory:#FAF6F0;
@@ -5,13 +23,13 @@
   --accent-wine:#7A2E2A;
   --accent-terra:#B0603F;
   --accent-brass:#C9A46A;
-  --font-head:'Cormorant', serif;
+  --font-head:'Balerno', 'Cormorant', serif;
   --font-body:'Be Vietnam Pro', sans-serif;
 }
 *{box-sizing:border-box; margin:0; padding:0;}
 html{scroll-behavior:smooth;}
 body{font-family:var(--font-body); background:var(--bg-sand); color:var(--text-main); line-height:1.75; font-weight:300; -webkit-font-smoothing:antialiased;}
-h1,h2,h3,h4{font-family:var(--font-head); font-weight:600; line-height:1.2; letter-spacing:.3px;}
+h1,h2,h3,h4{font-family:var(--font-head); font-weight:700; line-height:1.2; letter-spacing:.3px;}
 a{color:inherit; text-decoration:none;}
 img{max-width:100%; display:block;}
 .container{max-width:1140px; margin:0 auto; padding:0 24px;}
@@ -83,7 +101,7 @@ nav a:hover, nav a.active{opacity:1; color:var(--accent-wine);}
 .treatment-body h3{font-size:24px;}
 .treatment-body p{font-size:14.5px; color:#5b4a3d;}
 .meta-row{display:flex; justify-content:space-between; align-items:center; margin-top:auto; padding-top:16px; border-top:1px solid rgba(58,44,34,.1); font-size:13.5px;}
-.meta-row .price{font-family:var(--font-head); font-weight:600; font-size:17px; color:var(--accent-wine);}
+.meta-row .price{font-family:var(--font-head); font-weight:700; font-size:17px; color:var(--accent-wine);}
 .ideal-list{list-style:none; font-size:13.5px; color:#5b4a3d; margin-top:6px; display:flex; flex-direction:column; gap:4px;}
 .ideal-list li::before{content:'— ';}
 
@@ -97,7 +115,7 @@ nav a:hover, nav a.active{opacity:1; color:var(--accent-wine);}
 /* ===== TESTIMONIALS ===== */
 .testi-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:28px;}
 .testi-card{background:var(--bg-ivory); border-radius:24px; padding:32px; box-shadow:0 14px 34px -22px rgba(58,44,34,.2);}
-.testi-quote{font-family:var(--font-head); font-size:19px; font-style:italic; margin-bottom:20px;}
+.testi-quote{font-family:var(--font-head); font-size:19px; font-weight:700; margin-bottom:20px;}
 .testi-who{display:flex; align-items:center; gap:12px;}
 .testi-avatar{width:44px; height:44px; border-radius:50%; object-fit:cover;}
 .testi-name{font-size:14.5px; font-weight:500;}

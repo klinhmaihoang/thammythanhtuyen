@@ -19,9 +19,10 @@ function iconSvg(name){
 /* basePath: '' khi ở trang gốc (index.html), '../' khi ở trong thư mục con */
 function renderHeader(activeId, basePath){
   basePath = basePath || '';
-  /* Tạm thời chỉ hiện chữ (đỏ toàn bộ) — thay bằng logo ảnh thật khi có, xem ghi chú cuối file. */
   document.getElementById('logoText').innerHTML =
-    `<a href="${basePath}index.html" style="color:var(--accent-wine);">${CLINIC_DATA.clinicName}</a>`;
+    `<a href="${basePath}index.html" style="display:inline-flex; align-items:center;">
+       <img src="${basePath}assets/images/logo.png" alt="${CLINIC_DATA.clinicName}" style="height:52px; width:auto; border-radius:14px; display:block;">
+     </a>`;
   const nav = document.getElementById('navLinks');
   CLINIC_DATA.nav.forEach(item=>{
     const li = document.createElement('li');
