@@ -143,7 +143,7 @@ const CLINIC_DATA = {
   ],
   workingHours: {
     weekdayOpen: "08:00", weekdayClose: "19:30",
-    sundayOpen: "Nghỉ", sundayClose: "Nghỉ"
+    sundayOpen: "08:00", sundayClose: "17:00"
   },
 
   legal: [
@@ -153,7 +153,7 @@ const CLINIC_DATA = {
 
   /* ===== ĐẶT LỊCH — NỐI GOOGLE SHEET (xem hướng dẫn Apps Script) ===== */
   booking: {
-    apiUrl: "https://script.google.com/macros/s/AKfycbzkCnwrp2dF-Ray7-qJ2dQK61Dy1mIqa1HAHQELHKxgCZ_OlnxD4XgEd2hKPryKTMsn/exec",
+    apiUrl: "DÁN_WEB_APP_URL_VÀO_ĐÂY",
     slotStepMinutes: 90 // cách nhau 1 tiếng 30 phút; giờ mở/đóng cửa lấy theo workingHours ở trên, tự đổi theo Chủ nhật/ngày thường
   }
 };
