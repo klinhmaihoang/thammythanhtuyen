@@ -107,7 +107,7 @@ nav a:hover, nav a.active{opacity:1; color:var(--accent-wine);}
 .treatment-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:32px;}
 .treatment-card{background:linear-gradient(165deg, var(--bg-ivory) 0%, #fff 120%); border-radius:32px; overflow:hidden; box-shadow:0 22px 48px -24px rgba(58,44,34,.28); display:flex; flex-direction:column; transition:transform .45s ease, box-shadow .45s ease;}
 .treatment-card:hover{transform:translateY(-6px); box-shadow:0 30px 60px -22px rgba(58,44,34,.35);}
-.treatment-card .img-wrap{overflow:hidden; height:230px;}
+.treatment-card .img-wrap{display:block; overflow:hidden; height:230px;}
 .treatment-card img{height:230px; object-fit:cover; transition:transform .6s ease;}
 .treatment-card:hover img{transform:scale(1.08);}
 .treatment-body{padding:28px; display:flex; flex-direction:column; gap:10px; flex:1;}
@@ -181,3 +181,71 @@ footer p, footer li{font-size:13.5px; opacity:.82; margin-bottom:8px; list-style
 /* ===== FADE-UP SCROLL ===== */
 .reveal{opacity:0; transform:translateY(15px); transition:opacity .8s ease, transform .8s ease;}
 .reveal.visible{opacity:1; transform:translateY(0);}
+
+/* ===== BEFORE / AFTER SLIDER ===== */
+.ba-slider{position:relative; overflow:hidden; width:100%; height:100%; cursor:ew-resize; background:#111; touch-action:pan-y;}
+.ba-slider img{position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; display:block; pointer-events:none;}
+.ba-before-wrap{position:absolute; inset:0; width:50%; height:100%; overflow:hidden; border-right:2px solid rgba(255,255,255,.85);}
+.ba-handle{position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:38px; height:38px; border-radius:50%; background:#fff; display:flex; align-items:center; justify-content:center; box-shadow:0 8px 18px rgba(0,0,0,.35); cursor:ew-resize; z-index:3; color:var(--accent-wine); font-size:14px; font-weight:700;}
+.ba-label{position:absolute; top:12px; font-size:10.5px; letter-spacing:1.5px; text-transform:uppercase; background:rgba(20,14,10,.6); color:#fff; padding:5px 11px; border-radius:999px; z-index:2; font-weight:500;}
+.ba-label-before{left:12px;}
+.ba-label-after{right:12px;}
+.ba-slider-lg{height:460px; border-radius:32px;}
+@media(max-width:640px){ .ba-slider-lg{height:320px;} }
+
+/* ===== VÌ SAO CHỌN CHÚNG TÔI (grid dạng thẻ) ===== */
+.why-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:24px;}
+.why-card{background:linear-gradient(165deg, var(--bg-ivory) 0%, #fff 130%); border-radius:24px; padding:26px; box-shadow:0 16px 36px -24px rgba(58,44,34,.28);}
+.why-card .cred-dot{margin-bottom:14px;}
+.why-card h4{font-size:17px; margin-bottom:6px;}
+.why-card p{font-size:14px; color:#5b4a3d;}
+
+/* ===== ĐỘI NGŨ BÁC SĨ (grid thẻ có ảnh) ===== */
+.doctor-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:28px;}
+.doctor-card{background:linear-gradient(165deg, var(--bg-ivory) 0%, #fff 130%); border-radius:28px; overflow:hidden; box-shadow:0 18px 40px -24px rgba(58,44,34,.3); transition:transform .4s ease;}
+.doctor-card:hover{transform:translateY(-4px);}
+.doctor-card .doc-img{height:280px; overflow:hidden;}
+.doctor-card .doc-img img{width:100%; height:100%; object-fit:cover;}
+.doctor-card .doc-body{padding:22px;}
+.doctor-card h3{font-size:21px; margin-bottom:2px;}
+.doctor-card .doc-title{color:var(--accent-terra); font-size:13px; margin-bottom:10px; display:block;}
+.doctor-card p{font-size:13.5px; color:#5b4a3d; margin-bottom:10px;}
+.doc-highlights{list-style:none; display:flex; flex-direction:column; gap:5px;}
+.doc-highlights li{font-size:12.5px; color:#5b4a3d;}
+.doc-highlights li::before{content:'✦ '; color:var(--accent-brass);}
+
+/* ===== TRANG CHI TIẾT DỊCH VỤ ===== */
+.process-list{list-style:none; counter-reset:step; display:flex; flex-direction:column; gap:18px; margin-top:8px;}
+.process-list li{counter-increment:step; display:flex; gap:16px; align-items:flex-start;}
+.process-list li::before{
+  content:counter(step); flex-shrink:0; width:34px; height:34px; border-radius:50%;
+  background:linear-gradient(135deg, var(--accent-wine), var(--accent-terra)); color:#fff;
+  display:flex; align-items:center; justify-content:center; font-family:var(--font-head); font-weight:700; font-size:15px;
+}
+.process-list li span{padding-top:5px; font-size:15px; color:#5b4a3d;}
+.detail-meta-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:16px; margin:24px 0; padding:20px; background:var(--bg-ivory); border-radius:20px;}
+.detail-meta-grid div{text-align:center;}
+.detail-meta-grid .label{font-size:11.5px; text-transform:uppercase; letter-spacing:1px; color:var(--accent-terra); display:block; margin-bottom:4px;}
+.detail-meta-grid .value{font-family:var(--font-head); font-weight:700; font-size:19px;}
+
+/* ===== BLOG ===== */
+.blog-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:28px;}
+.blog-card{background:linear-gradient(165deg, var(--bg-ivory) 0%, #fff 130%); border-radius:28px; overflow:hidden; box-shadow:0 18px 40px -24px rgba(58,44,34,.28); display:flex; flex-direction:column; transition:transform .4s ease;}
+.blog-card:hover{transform:translateY(-4px);}
+.blog-card .blog-img{height:200px; overflow:hidden;}
+.blog-card .blog-img img{width:100%; height:100%; object-fit:cover; transition:transform .6s ease;}
+.blog-card:hover .blog-img img{transform:scale(1.06);}
+.blog-card .blog-body{padding:24px; display:flex; flex-direction:column; gap:8px; flex:1;}
+.blog-date{font-size:11.5px; letter-spacing:1px; text-transform:uppercase; color:var(--accent-terra);}
+.blog-card h3{font-size:19px;}
+.blog-card p{font-size:14px; color:#5b4a3d;}
+.blog-post-content{max-width:720px; font-size:16.5px; color:#4a382c;}
+.blog-post-content p{margin-bottom:18px;}
+
+/* ===== ĐẶT LỊCH: chọn chi nhánh ===== */
+.branch-radio-group{display:flex; flex-direction:column; gap:10px;}
+.branch-radio{display:flex; align-items:flex-start; gap:10px; padding:12px 14px; border:1px solid rgba(58,44,34,.16); border-radius:14px; cursor:pointer; background:#fff; transition:border-color .2s;}
+.branch-radio:has(input:checked){border-color:var(--accent-terra); background:rgba(176,96,63,.06);}
+.branch-radio input{width:auto; margin-top:3px;}
+.branch-radio .b-name{font-weight:500; font-size:14px;}
+.branch-radio .b-addr{font-size:12.5px; color:#5b4a3d;}
