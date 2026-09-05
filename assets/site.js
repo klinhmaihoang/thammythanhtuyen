@@ -151,9 +151,17 @@ function renderTreatmentCard(t, opts){
         <p>${desc}</p>
         ${idealHtml}
         <p style="font-size:13px;color:var(--accent-terra);">${t.technology}</p>
-        <div class="meta-row">
-          <span>${t.duration}</span>
-          <span class="price">${t.price}</span>
+        <div class="spec-row">
+          <div class="spec-item">
+            <span class="spec-icon">⏱</span>
+            <span class="spec-value">${t.duration}</span>
+            <span class="spec-label">Thời gian</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-icon">₫</span>
+            <span class="spec-value price">${t.price}</span>
+            <span class="spec-label">Chi phí</span>
+          </div>
         </div>
         <a href="${detailHref}" class="btn btn-outline" style="margin-top:14px; justify-content:center;">Xem chi tiết</a>
         ${opts.showCta ? `<a href="${bookHref}" class="btn btn-primary" style="margin-top:8px; justify-content:center;">Tư vấn liệu trình này</a>` : ''}
@@ -197,9 +205,9 @@ function initTreatmentDetailPage(basePath){
     <div class="container section">
       <div class="reveal">${renderBASlider(t.beforeImage, t.afterImage, t.name, 'ba-slider-lg')}</div>
       <div class="reveal detail-meta-grid">
-        <div><span class="label">Công nghệ</span><span class="value" style="font-size:14px;">${t.technology}</span></div>
-        <div><span class="label">Thời gian</span><span class="value">${t.duration}</span></div>
-        <div><span class="label">Chi phí</span><span class="value">${t.price}</span></div>
+        <div><span class="label">⚙ Công nghệ</span><span class="value" style="font-size:14px;">${t.technology}</span></div>
+        <div><span class="label">⏱ Thời gian</span><span class="value">${t.duration}</span></div>
+        <div><span class="label">₫ Chi phí</span><span class="value">${t.price}</span></div>
       </div>
       <div class="reveal" style="max-width:720px;">
         <p style="font-size:17px; color:#4a382c;">${t.longDescription}</p>
@@ -214,6 +222,17 @@ function initTreatmentDetailPage(basePath){
   initReveal();
 }
 
+/* ===== DẢI THỐNG KÊ TIN CẬY ===== */
+function renderTrustBar(containerId){
+  const el = document.getElementById(containerId);
+  if(!el || !CLINIC_DATA.stats) return;
+  el.innerHTML = CLINIC_DATA.stats.map(s=>`
+    <div class="trust-item reveal">
+      <span class="value">${s.value}</span>
+      <span class="label">${s.label}</span>
+    </div>`).join('');
+}
+
 /* ===== VÌ SAO CHỌN CHÚNG TÔI ===== */
 function renderWhyChooseUs(containerId){
   const grid = document.getElementById(containerId);
@@ -221,6 +240,20 @@ function renderWhyChooseUs(containerId){
   grid.innerHTML = CLINIC_DATA.whyChooseUs.map((r,i)=>`
     <div class="why-card reveal">
       <div class="cred-dot">${i+1}</div>
+      <h4>${r.title}</h4>
+      <p>${r.desc}</p>
+    </div>`).join('');
+}
+
+/* Bản gọn — dạng icon 4 cột, dùng thay cho các đoạn "kể chuyện" ảnh-chữ */
+function renderIconChecklist(containerId, limit){
+  const grid = document.getElementById(containerId);
+  if(!grid) return;
+  const icons = ['✓','⚕','🛡','✦'];
+  const list = limit ? CLINIC_DATA.whyChooseUs.slice(0, limit) : CLINIC_DATA.whyChooseUs;
+  grid.innerHTML = list.map((r,i)=>`
+    <div class="icon-check-item reveal">
+      <div class="ic-circle">${icons[i % icons.length]}</div>
       <h4>${r.title}</h4>
       <p>${r.desc}</p>
     </div>`).join('');

@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@400;500;600;700&family=Be+Vietnam+Pro:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css?v=3">
+<link rel="stylesheet" href="assets/style.css?v=4">
 </head>
 <body>
 
@@ -37,25 +37,11 @@
   </div>
 </section>
 
-<!-- TEASER: CÂU CHUYỆN THƯƠNG HIỆU -->
-<section class="section">
-  <div class="container">
-    <div class="split-row reverse">
-      <div class="split-img reveal">
-        <img src="" id="storyImg" alt="Không gian phòng khám">
-      </div>
-      <div class="split-text reveal">
-        <span class="section-label">Về Thanh Tuyền</span>
-        <h2 id="storyHeading"></h2>
-        <p id="storyPara1"></p>
-        <a href="about-us/index.html" class="btn btn-outline" style="margin-top:12px;">Tìm hiểu về đội ngũ bác sĩ</a>
-      </div>
-    </div>
-  </div>
-</section>
+<!-- DẢI THỐNG KÊ TIN CẬY -->
+<div class="trust-bar" id="trustBar"></div>
 
 <!-- TREATMENTS TEASER -->
-<section class="section alt" id="treatments">
+<section class="section" id="treatments">
   <div class="container">
     <span class="section-label reveal">Phác đồ mũi nhọn</span>
     <h2 class="section-title reveal">Liệu trình được cá nhân hoá theo từng gương mặt</h2>
@@ -63,6 +49,18 @@
     <div class="treatment-grid" id="treatmentGrid"></div>
     <div class="reveal" style="text-align:center; margin-top:44px;">
       <a href="treatments/index.html" class="btn btn-outline">Xem toàn bộ liệu trình</a>
+    </div>
+  </div>
+</section>
+
+<!-- VÌ SAO CHỌN CHÚNG TÔI (gọn) -->
+<section class="section alt">
+  <div class="container">
+    <span class="section-label reveal">Vì sao chọn Thanh Tuyền</span>
+    <h2 class="section-title reveal">Được xây dựng trên nền tảng chuyên môn</h2>
+    <div class="icon-checklist" id="iconChecklist"></div>
+    <div class="reveal" style="text-align:center; margin-top:36px;">
+      <a href="about-us/index.html" class="btn btn-outline">Tìm hiểu về đội ngũ bác sĩ</a>
     </div>
   </div>
 </section>
@@ -99,19 +97,18 @@
   </div>
 </footer>
 
-<script src="assets/clinic-data.js?v=3"></script>
-<script src="assets/site.js?v=3"></script>
+<script src="assets/clinic-data.js?v=4"></script>
+<script src="assets/site.js?v=4"></script>
 <script>
   renderHeader('home', '');
   initHeroSlider();
   document.getElementById('heroTitle').textContent = CLINIC_DATA.hero.title;
   document.getElementById('heroSub').textContent = CLINIC_DATA.hero.subtitle;
 
-  document.getElementById('storyImg').src = CLINIC_DATA.images.clinicSpace;
-  document.getElementById('storyHeading').textContent = CLINIC_DATA.story.heading;
-  document.getElementById('storyPara1').textContent = CLINIC_DATA.story.paragraphs[0];
+  renderTrustBar('trustBar');
 
   renderTreatments('treatmentGrid', { limit: 4, basePath: '' });
+  renderIconChecklist('iconChecklist', 4);
   renderTestimonials('testiGrid');
   renderFooter('');
   initReveal();

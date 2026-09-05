@@ -17,8 +17,8 @@ const CLINIC_DATA = {
 
   images: {
     heroSlides: [
-      "https://images.unsplash.com/photo-1758448500688-3ababa93fd67?auto=format&fit=crop&w=1800&q=80",
       "https://images.unsplash.com/photo-1662543701887-91f8f042a338?auto=format&fit=crop&w=1800&q=80",
+      "https://images.unsplash.com/photo-1758448500688-3ababa93fd67?auto=format&fit=crop&w=1800&q=80",
       "https://images.unsplash.com/photo-1569925444984-9e2e5fc3d1fb?auto=format&fit=crop&w=1800&q=80"
     ],
     aboutHero: "https://images.unsplash.com/photo-1662543701887-91f8f042a338?auto=format&fit=crop&w=1600&q=80",
@@ -34,6 +34,14 @@ const CLINIC_DATA = {
     { id: "treatments", label: "Liệu trình", path: "treatments/index.html" },
     { id: "blog", label: "Blog", path: "blog/index.html" },
     { id: "contact", label: "Liên hệ & Đặt lịch", path: "contact/index.html" }
+  ],
+
+  /* ===== SỐ LIỆU TIN CẬY — hiện dạng dải thống kê ngay dưới Hero ===== */
+  stats: [
+    { value: "2013", label: "Năm được cấp phép hoạt động" },
+    { value: "[CẬP NHẬT]", label: "Ca thực hiện thành công" },
+    { value: "[CẬP NHẬT]", label: "Bác sĩ chuyên khoa" },
+    { value: "3", label: "Cơ sở tại TP.HCM & An Giang" }
   ],
 
   hero: {
