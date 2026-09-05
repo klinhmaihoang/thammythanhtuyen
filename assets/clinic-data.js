@@ -1,228 +1,290 @@
-/* ================================================================
-   CLINIC_DATA — NGUỒN DỮ LIỆU DUY NHẤT CHO TOÀN BỘ WEBSITE.
-   Sửa nội dung/giá/link ở ĐÂY (hoặc qua trang /admin/), tất cả các
-   trang sẽ tự động cập nhật theo.
-
-   [CẬP NHẬT] = nội dung tạm, cần thay bằng nội dung/ảnh thật.
-
-   LƯU Ý QUAN TRỌNG VỀ ẢNH TRƯỚC/SAU (beforeImage/afterImage):
-   Ảnh trước/sau hiện đang dùng CÙNG 1 ảnh minh hoạ cho cả hai ô
-   (để không tạo ra kết quả "giả") — bắt buộc phải thay bằng ảnh
-   thật của khách hàng ĐÃ ĐỒNG Ý cho phép sử dụng công khai trước
-   khi đăng chính thức, tuân thủ quy định quảng cáo y tế.
-================================================================= */
+/* File này được xuất từ trang Admin — thay thế toàn bộ nội dung file assets/clinic-data.js hiện tại bằng nội dung này. */
 const CLINIC_DATA = {
-  clinicName: "Thẩm Mỹ Thanh Tuyền",
-  tagline: "Vẻ đẹp được lắng nghe, sự tự tin được nâng niu.",
-
-  images: {
-    heroSlides: [
+  "clinicName": "Thẩm Mỹ Thanh Tuyền",
+  "tagline": "Vẻ đẹp được lắng nghe, sự tự tin được nâng niu.",
+  "images": {
+    "heroSlides": [
       "https://images.unsplash.com/photo-1758448500688-3ababa93fd67?auto=format&fit=crop&w=1800&q=80",
       "https://images.unsplash.com/photo-1662543701887-91f8f042a338?auto=format&fit=crop&w=1800&q=80",
       "https://images.unsplash.com/photo-1569925444984-9e2e5fc3d1fb?auto=format&fit=crop&w=1800&q=80"
     ],
-    aboutHero: "https://images.unsplash.com/photo-1662543701887-91f8f042a338?auto=format&fit=crop&w=1600&q=80",
-    treatmentsHero: "https://images.unsplash.com/photo-1758448500688-3ababa93fd67?auto=format&fit=crop&w=1600&q=80",
-    contactHero: "https://images.unsplash.com/photo-1569925444984-9e2e5fc3d1fb?auto=format&fit=crop&w=1600&q=80",
-    blogHero: "https://images.unsplash.com/photo-1662543701887-91f8f042a338?auto=format&fit=crop&w=1600&q=80",
-    clinicSpace: "https://images.unsplash.com/photo-1758448500688-3ababa93fd67?auto=format&fit=crop&w=1000&q=80"
+    "aboutHero": "https://images.unsplash.com/photo-1662543701887-91f8f042a338?auto=format&fit=crop&w=1600&q=80",
+    "treatmentsHero": "https://images.unsplash.com/photo-1758448500688-3ababa93fd67?auto=format&fit=crop&w=1600&q=80",
+    "contactHero": "https://images.unsplash.com/photo-1569925444984-9e2e5fc3d1fb?auto=format&fit=crop&w=1600&q=80",
+    "blogHero": "https://images.unsplash.com/photo-1662543701887-91f8f042a338?auto=format&fit=crop&w=1600&q=80",
+    "clinicSpace": "https://images.unsplash.com/photo-1758448500688-3ababa93fd67?auto=format&fit=crop&w=1000&q=80"
   },
-
-  nav: [
-    { id: "home", label: "Trang chủ", path: "index.html" },
-    { id: "about", label: "Giới thiệu", path: "about-us/index.html" },
-    { id: "treatments", label: "Liệu trình", path: "treatments/index.html" },
-    { id: "blog", label: "Blog", path: "blog/index.html" },
-    { id: "contact", label: "Liên hệ & Đặt lịch", path: "contact/index.html" }
+  "nav": [
+    {
+      "id": "home",
+      "label": "Trang chủ",
+      "path": "index.html"
+    },
+    {
+      "id": "about",
+      "label": "Giới thiệu",
+      "path": "about-us/index.html"
+    },
+    {
+      "id": "treatments",
+      "label": "Liệu trình",
+      "path": "treatments/index.html"
+    },
+    {
+      "id": "blog",
+      "label": "Blog",
+      "path": "blog/index.html"
+    },
+    {
+      "id": "contact",
+      "label": "Liên hệ & Đặt lịch",
+      "path": "contact/index.html"
+    }
   ],
-
-  hero: {
-    title: "Thanh lịch chuẩn y khoa, kiến tạo vẻ đẹp bền vững",
-    subtitle: "ThS. BS Trần Thị Thanh Tuyền cùng đội ngũ trực tiếp thăm khám, thiết kế phác đồ cá nhân hoá cho từng gương mặt — an toàn, minh bạch, được cấp phép hoạt động từ 2013."
+  "hero": {
+    "title": "Thanh lịch chuẩn y khoa, kiến tạo vẻ đẹp bền vững",
+    "subtitle": "ThS. BS Trần Thị Thanh Tuyền cùng đội ngũ trực tiếp thăm khám, thiết kế phác đồ cá nhân hoá cho từng gương mặt — an toàn, minh bạch, được cấp phép hoạt động từ 2013."
   },
-
-  story: {
-    heading: "Một phòng khám, một triết lý: lắng nghe trước khi can thiệp",
-    paragraphs: [
+  "story": {
+    "heading": "Một phòng khám, một triết lý: lắng nghe trước khi can thiệp",
+    "paragraphs": [
       "Thẩm Mỹ Thanh Tuyền được thành lập với mong muốn mang đến một trải nghiệm làm đẹp khác — nơi mỗi khách hàng được thăm khám như một cá thể riêng biệt, không áp dụng công thức hàng loạt.",
       "Từ buổi tư vấn đầu tiên, bác sĩ trực tiếp lắng nghe mong muốn, phân tích cấu trúc gương mặt và đưa ra phác đồ phù hợp nhất — thay vì áp đặt một tiêu chuẩn đẹp chung.",
       "[CẬP NHẬT] Bổ sung thêm cột mốc thành lập, số năm hoạt động, số ca đã thực hiện thành công (nếu có số liệu chính thức)."
     ]
   },
-
-  /* ===== VÌ SAO CHỌN THANH TUYỀN ===== */
-  whyChooseUs: [
-    { title: "Bác sĩ trực tiếp thăm khám", desc: "Không giao phó cho trợ lý — bác sĩ đồng hành xuyên suốt từ tư vấn đến hồi phục." },
-    { title: "Cơ sở được cấp phép hợp pháp", desc: "Giấy phép hoạt động khám chữa bệnh do Sở Y tế cấp, tuân thủ đầy đủ quy chuẩn." },
-    { title: "Phác đồ cá nhân hoá", desc: "Mỗi ca đều được đo đạc, thiết kế riêng theo cấu trúc gương mặt, không rập khuôn." },
-    { title: "Minh bạch chi phí", desc: "Tư vấn rõ ràng, báo giá cụ thể trước khi thực hiện, không phát sinh." },
-    { title: "Không gian riêng tư, ấm áp", desc: "Mỗi buổi thăm khám là một cuộc trò chuyện, không phải một giao dịch." },
-    { title: "Đồng hành hậu phẫu", desc: "[CẬP NHẬT] Mô tả quy trình chăm sóc, tái khám sau thực hiện dịch vụ." }
-  ],
-
-  /* ===== ĐỘI NGŨ BÁC SĨ — thêm/bớt bao nhiêu bác sĩ tuỳ ý trong Admin ===== */
-  doctors: [
+  "whyChooseUs": [
     {
-      name: "ThS. BS Trần Thị Thanh Tuyền",
-      title: "Người chịu trách nhiệm chuyên môn — Phẫu thuật Thẩm mỹ",
-      image: "https://images.unsplash.com/photo-1662543701887-91f8f042a338?auto=format&fit=crop&w=900&q=80",
-      bio: "Trực tiếp thăm khám, thiết kế phác đồ và đồng hành cùng khách hàng từ buổi tư vấn đầu tiên đến khi hồi phục hoàn toàn.",
-      highlights: ["[CẬP NHẬT] Số năm kinh nghiệm", "[CẬP NHẬT] Nơi tốt nghiệp / chuyên khoa", "[CẬP NHẬT] Chứng chỉ hành nghề số ..."]
+      "title": "Bác sĩ trực tiếp thăm khám",
+      "desc": "Không giao phó cho trợ lý — bác sĩ đồng hành xuyên suốt từ tư vấn đến hồi phục."
     },
     {
-      name: "[CẬP NHẬT] Tên bác sĩ 2",
-      title: "[CẬP NHẬT] Chuyên môn",
-      image: "https://images.unsplash.com/photo-1569925444984-9e2e5fc3d1fb?auto=format&fit=crop&w=900&q=80",
-      bio: "[CẬP NHẬT] Giới thiệu ngắn về bác sĩ.",
-      highlights: ["[CẬP NHẬT] Kinh nghiệm", "[CẬP NHẬT] Bằng cấp"]
+      "title": "Cơ sở được cấp phép hợp pháp",
+      "desc": "Giấy phép hoạt động khám chữa bệnh do Sở Y tế cấp, tuân thủ đầy đủ quy chuẩn."
+    },
+    {
+      "title": "Phác đồ cá nhân hoá",
+      "desc": "Mỗi ca đều được đo đạc, thiết kế riêng theo cấu trúc gương mặt, không rập khuôn."
+    },
+    {
+      "title": "Minh bạch chi phí",
+      "desc": "Tư vấn rõ ràng, báo giá cụ thể trước khi thực hiện, không phát sinh."
+    },
+    {
+      "title": "Không gian riêng tư, ấm áp",
+      "desc": "Mỗi buổi thăm khám là một cuộc trò chuyện, không phải một giao dịch."
+    },
+    {
+      "title": "Đồng hành hậu phẫu",
+      "desc": "[CẬP NHẬT] Mô tả quy trình chăm sóc, tái khám sau thực hiện dịch vụ."
     }
   ],
-
-  /* ===== VIDEO YOUTUBE ===== */
-  youtube: {
-    channelUrl: "https://www.youtube.com/channel/UCrSc0Hp6PVOk-9icntZzdrg",
-    videos: [
-      { title: "Hỏi gì đáp nấy cùng Bác Sĩ Tuyền", videoId: "Rwv2bRNww7w" },
-      { title: "Tâm lý của các chị em sau khi làm phẫu thuật thẩm mỹ", videoId: "DÁN_ID_VIDEO_2" },
-      { title: "Đẹp hơn là đúng, đẹp là chưa đúng", videoId: "DÁN_ID_VIDEO_3" }
+  "doctors": [
+    {
+      "name": "ThS. BS Trần Thị Thanh Tuyền",
+      "title": "Người chịu trách nhiệm chuyên môn — Phẫu thuật Thẩm mỹ",
+      "image": "https://images.unsplash.com/photo-1662543701887-91f8f042a338?auto=format&fit=crop&w=900&q=80",
+      "bio": "Trực tiếp thăm khám, thiết kế phác đồ và đồng hành cùng khách hàng từ buổi tư vấn đầu tiên đến khi hồi phục hoàn toàn.",
+      "highlights": [
+        "[CẬP NHẬT] Số năm kinh nghiệm",
+        "[CẬP NHẬT] Nơi tốt nghiệp / chuyên khoa",
+        "[CẬP NHẬT] Chứng chỉ hành nghề số ..."
+      ]
+    },
+    {
+      "name": "[CẬP NHẬT] Tên bác sĩ 2",
+      "title": "[CẬP NHẬT] Chuyên môn",
+      "image": "https://images.unsplash.com/photo-1569925444984-9e2e5fc3d1fb?auto=format&fit=crop&w=900&q=80",
+      "bio": "[CẬP NHẬT] Giới thiệu ngắn về bác sĩ.",
+      "highlights": [
+        "[CẬP NHẬT] Kinh nghiệm",
+        "[CẬP NHẬT] Bằng cấp"
+      ]
+    }
+  ],
+  "youtube": {
+    "channelUrl": "https://www.youtube.com/channel/UCrSc0Hp6PVOk-9icntZzdrg",
+    "videos": [
+      {
+        "title": "Hỏi gì đáp nấy cùng Bác Sĩ Tuyền",
+        "videoId": "Rwv2bRNww7w"
+      },
+      {
+        "title": "Tâm lý của các chị em sau khi làm phẫu thuật thẩm mỹ",
+        "videoId": "DÁN_ID_VIDEO_2"
+      },
+      {
+        "title": "Đẹp hơn là đúng, đẹp là chưa đúng",
+        "videoId": "DÁN_ID_VIDEO_3"
+      }
     ]
   },
-
-  /* ===== DỊCH VỤ — mỗi dịch vụ có trang chi tiết riêng tự sinh theo "slug" ===== */
-  treatments: [
+  "treatments": [
     {
-      slug: "net-thanh",
-      name: "Nét Thanh",
-      subtitle: "Nâng mũi cấu trúc",
-      description: "Dáng mũi được thiết kế thanh thoát, hài hoà với gương mặt.",
-      longDescription: "Kết hợp sụn tự thân (sụn sườn/sụn vành tai) và sụn nhân tạo y tế cao cấp để dựng trụ mũi vững chắc, dáng mũi tự nhiên theo thời gian, hạn chế biến chứng bóng đỏ đầu mũi.",
-      technology: "Cấu trúc toàn phần — sụn tự thân + sụn nhân tạo y tế",
-      duration: "90 – 120 phút",
-      price: "[CẬP NHẬT GIÁ]",
-      process: [
+      "slug": "net-thanh",
+      "name": "Nét Thanh",
+      "subtitle": "Nâng mũi cấu trúc",
+      "description": "Dáng mũi được thiết kế thanh thoát, hài hoà với gương mặt.",
+      "longDescription": "Kết hợp sụn tự thân (sụn sườn/sụn vành tai) và sụn nhân tạo y tế cao cấp để dựng trụ mũi vững chắc, dáng mũi tự nhiên theo thời gian, hạn chế biến chứng bóng đỏ đầu mũi.",
+      "technology": "Cấu trúc toàn phần — sụn tự thân + sụn nhân tạo y tế",
+      "duration": "90 – 120 phút",
+      "price": "[CẬP NHẬT GIÁ]",
+      "process": [
         "Thăm khám, đo đạc cấu trúc mũi và tư vấn dáng mũi phù hợp",
         "Xét nghiệm tiền phẫu, kiểm tra sức khỏe tổng quát",
         "Thực hiện phẫu thuật theo phác đồ đã thống nhất",
         "Theo dõi hậu phẫu và hẹn lịch tái khám"
       ],
-      idealFor: ["Mũi thấp, đầu mũi to hoặc lệch vách ngăn", "Đã nâng mũi trước đó, cần chỉnh sửa lại", "Mong muốn form mũi bền, tự nhiên lâu dài"],
-      beforeImage: "https://images.unsplash.com/photo-1662543701887-91f8f042a338?auto=format&fit=crop&w=900&q=80",
-      afterImage: "https://images.unsplash.com/photo-1662543701887-91f8f042a338?auto=format&fit=crop&w=900&q=80"
+      "idealFor": [
+        "Mũi thấp, đầu mũi to hoặc lệch vách ngăn",
+        "Đã nâng mũi trước đó, cần chỉnh sửa lại",
+        "Mong muốn form mũi bền, tự nhiên lâu dài"
+      ],
+      "beforeImage": "https://images.unsplash.com/photo-1662543701887-91f8f042a338?auto=format&fit=crop&w=900&q=80",
+      "afterImage": "https://klinhmaihoang.github.io/thammythanhtuyen/assets/images/uploads/sua_mui.png"
     },
     {
-      slug: "mat-biec",
-      name: "Mắt Biếc",
-      subtitle: "Tạo hình mí mắt",
-      description: "Đôi mắt được đánh thức nhẹ nhàng, giữ trọn thần thái tự nhiên.",
-      longDescription: "Áp dụng cho cả mí lót, sụp mi và mở góc mắt — đường mổ được tính toán riêng theo dáng mắt sẵn có, hạn chế sẹo và thời gian hồi phục.",
-      technology: "Tạo hình mí theo đường chỉ định riêng cho từng dáng mắt",
-      duration: "60 – 90 phút",
-      price: "[CẬP NHẬT GIÁ]",
-      process: [
+      "slug": "mat-biec",
+      "name": "Mắt Biếc",
+      "subtitle": "Tạo hình mí mắt",
+      "description": "Đôi mắt được đánh thức nhẹ nhàng, giữ trọn thần thái tự nhiên.",
+      "longDescription": "Áp dụng cho cả mí lót, sụp mi và mở góc mắt — đường mổ được tính toán riêng theo dáng mắt sẵn có, hạn chế sẹo và thời gian hồi phục.",
+      "technology": "Tạo hình mí theo đường chỉ định riêng cho từng dáng mắt",
+      "duration": "60 – 90 phút",
+      "price": "[CẬP NHẬT GIÁ]",
+      "process": [
         "Thăm khám, đo vẽ thiết kế nếp mí phù hợp gương mặt",
         "Gây tê tại chỗ, thực hiện tạo hình mí",
         "Hướng dẫn chăm sóc và hẹn cắt chỉ (nếu có)",
         "Tái khám đánh giá kết quả"
       ],
-      idealFor: ["Mí một mí hoặc mí lót không rõ", "Sụp mi nhẹ đến trung bình", "Mắt một mí, hai mí không đều"],
-      beforeImage: "https://images.unsplash.com/photo-1569925444984-9e2e5fc3d1fb?auto=format&fit=crop&w=900&q=80",
-      afterImage: "https://images.unsplash.com/photo-1569925444984-9e2e5fc3d1fb?auto=format&fit=crop&w=900&q=80"
+      "idealFor": [
+        "Mí một mí hoặc mí lót không rõ",
+        "Sụp mi nhẹ đến trung bình",
+        "Mắt một mí, hai mí không đều"
+      ],
+      "beforeImage": "https://klinhmaihoang.github.io/thammythanhtuyen/assets/images/uploads/mi_mat_truoc_phau_thuat.jpg",
+      "afterImage": "https://klinhmaihoang.github.io/thammythanhtuyen/assets/images/uploads/mi_mat.jpg"
     },
     {
-      slug: "duong-net-hai-hoa",
-      name: "Đường Nét Hài Hoà",
-      subtitle: "Tạo hình khuôn mặt (treo cung mày, độn cằm)",
-      description: "Điều chỉnh tinh tế đường viền gương mặt, cân bằng tổng thể.",
-      longDescription: "Kết hợp treo cung mày và độn cằm để cân đối tỉ lệ ba vùng gương mặt, mang lại thần thái tự tin hơn mà vẫn giữ nét dịu dàng quen thuộc.",
-      technology: "Treo cung mày nội soi + độn cằm chất liệu y tế cao cấp",
-      duration: "75 – 100 phút",
-      price: "[CẬP NHẬT GIÁ]",
-      process: [
+      "slug": "duong-net-hai-hoa",
+      "name": "Đường Nét Hài Hoà",
+      "subtitle": "Tạo hình khuôn mặt (treo cung mày, độn cằm)",
+      "description": "Điều chỉnh tinh tế đường viền gương mặt, cân bằng tổng thể.",
+      "longDescription": "Kết hợp treo cung mày và độn cằm để cân đối tỉ lệ ba vùng gương mặt, mang lại thần thái tự tin hơn mà vẫn giữ nét dịu dàng quen thuộc.",
+      "technology": "Treo cung mày nội soi + độn cằm chất liệu y tế cao cấp",
+      "duration": "75 – 100 phút",
+      "price": "[CẬP NHẬT GIÁ]",
+      "process": [
         "Thăm khám, phân tích tỉ lệ gương mặt",
         "Tư vấn phương án treo mày và/hoặc độn cằm phù hợp",
         "Thực hiện thủ thuật",
         "Theo dõi hồi phục và tái khám"
       ],
-      idealFor: ["Cung mày sụp, gương mặt trông mệt mỏi", "Cằm ngắn/lẹm, tỉ lệ gương mặt chưa cân đối"],
-      beforeImage: "https://images.unsplash.com/photo-1758448500688-3ababa93fd67?auto=format&fit=crop&w=900&q=80",
-      afterImage: "https://images.unsplash.com/photo-1758448500688-3ababa93fd67?auto=format&fit=crop&w=900&q=80"
+      "idealFor": [
+        "Cung mày sụp, gương mặt trông mệt mỏi",
+        "Cằm ngắn/lẹm, tỉ lệ gương mặt chưa cân đối"
+      ],
+      "beforeImage": "https://klinhmaihoang.github.io/thammythanhtuyen/assets/images/uploads/khuon_mat.jpg",
+      "afterImage": "https://klinhmaihoang.github.io/thammythanhtuyen/assets/images/uploads/khuon_mat.jpg"
     },
     {
-      slug: "signature-cham-soc",
-      name: "Thanh Tuyền Signature",
-      subtitle: "Chăm sóc & phục hồi da",
-      description: "Khoảng lặng chăm sóc bản thân, phục hồi làn da.",
-      longDescription: "Phù hợp cho giai đoạn hồi phục sau phẫu thuật hoặc như một liệu trình chăm sóc da định kỳ trong không gian riêng tư, ấm áp.",
-      technology: "[CẬP NHẬT] Ghi rõ công nghệ/liệu trình chăm sóc da đang áp dụng",
-      duration: "45 – 60 phút / buổi",
-      price: "[CẬP NHẬT GIÁ]",
-      process: [
+      "slug": "signature-cham-soc",
+      "name": "Thanh Tuyền Signature",
+      "subtitle": "Chăm sóc & phục hồi da",
+      "description": "Khoảng lặng chăm sóc bản thân, phục hồi làn da.",
+      "longDescription": "Phù hợp cho giai đoạn hồi phục sau phẫu thuật hoặc như một liệu trình chăm sóc da định kỳ trong không gian riêng tư, ấm áp.",
+      "technology": "[CẬP NHẬT] Ghi rõ công nghệ/liệu trình chăm sóc da đang áp dụng",
+      "duration": "45 – 60 phút / buổi",
+      "price": "[CẬP NHẬT GIÁ]",
+      "process": [
         "Thăm khám và đánh giá tình trạng da",
         "Làm sạch da chuyên sâu",
         "Thực hiện liệu trình chăm sóc/phục hồi phù hợp",
         "Tư vấn chăm sóc tại nhà"
       ],
-      idealFor: ["Cần phục hồi da sau phẫu thuật", "Muốn chăm sóc da định kỳ, thư giãn"],
-      beforeImage: "https://images.unsplash.com/photo-1569925444984-9e2e5fc3d1fb?auto=format&fit=crop&w=900&q=60",
-      afterImage: "https://images.unsplash.com/photo-1569925444984-9e2e5fc3d1fb?auto=format&fit=crop&w=900&q=60"
+      "idealFor": [
+        "Cần phục hồi da sau phẫu thuật",
+        "Muốn chăm sóc da định kỳ, thư giãn"
+      ],
+      "beforeImage": "https://klinhmaihoang.github.io/thammythanhtuyen/assets/images/uploads/tham-my-voc-dang.jpg",
+      "afterImage": "https://klinhmaihoang.github.io/thammythanhtuyen/assets/images/uploads/tham-my-voc-dang.jpg"
     }
   ],
-
-  testimonials: [
-    { name: "Khách hàng N.T.H", result: "Nâng mũi cấu trúc — 6 tháng", quote: "Dáng mũi rất tự nhiên, không ai nhận ra là đã can thiệp. Bác sĩ tư vấn kỹ trước khi quyết định.", avatar: "https://images.unsplash.com/photo-1569925444984-9e2e5fc3d1fb?auto=format&fit=crop&w=100&q=60" },
-    { name: "Khách hàng L.M.A", result: "Tạo hình mí mắt — 3 tháng", quote: "Không gian riêng tư, ekip chăm sóc rất tận tâm suốt quá trình hồi phục.", avatar: "https://images.unsplash.com/photo-1569925444984-9e2e5fc3d1fb?auto=format&fit=crop&w=100&q=60" },
-    { name: "Khách hàng P.T.K", result: "Chăm sóc da Signature", quote: "Đến đây như một buổi nghỉ ngơi thực sự, không hề có cảm giác căng thẳng như phòng khám thông thường.", avatar: "https://images.unsplash.com/photo-1569925444984-9e2e5fc3d1fb?auto=format&fit=crop&w=100&q=60" }
-  ],
-
-  /* ===== BLOG / TIN TỨC ===== */
-  blogPosts: [
+  "testimonials": [
     {
-      slug: "cham-soc-sau-nang-mui",
-      title: "Hướng dẫn chăm sóc sau nâng mũi để lên form đẹp",
-      excerpt: "Những lưu ý quan trọng trong 2 tuần đầu sau nâng mũi giúp vết thương mau lành và dáng mũi ổn định.",
-      coverImage: "https://images.unsplash.com/photo-1662543701887-91f8f042a338?auto=format&fit=crop&w=1000&q=80",
-      date: "2026-08-20",
-      content: "[CẬP NHẬT] Nội dung bài viết đầy đủ. Cách xuống dòng đoạn văn: để 1 dòng trống giữa các đoạn trong ô nội dung ở trang Admin, hệ thống sẽ tự tách thành từng đoạn văn khi hiển thị.\n\nĐoạn thứ hai ví dụ ở đây."
+      "name": "Khách hàng N.T.H",
+      "result": "Nâng mũi cấu trúc — 6 tháng",
+      "quote": "Dáng mũi rất tự nhiên, không ai nhận ra là đã can thiệp. Bác sĩ tư vấn kỹ trước khi quyết định.",
+      "avatar": "https://images.unsplash.com/photo-1569925444984-9e2e5fc3d1fb?auto=format&fit=crop&w=100&q=60"
     },
     {
-      slug: "chon-dang-mui-phu-hop",
-      title: "Làm sao chọn được dáng mũi phù hợp với gương mặt?",
-      excerpt: "Không phải dáng mũi nào đẹp cũng phù hợp với mọi gương mặt — bác sĩ chia sẻ nguyên tắc chọn dáng mũi hài hoà.",
-      coverImage: "https://images.unsplash.com/photo-1758448500688-3ababa93fd67?auto=format&fit=crop&w=1000&q=80",
-      date: "2026-08-05",
-      content: "[CẬP NHẬT] Nội dung bài viết đầy đủ."
+      "name": "Khách hàng L.M.A",
+      "result": "Tạo hình mí mắt — 3 tháng",
+      "quote": "Không gian riêng tư, ekip chăm sóc rất tận tâm suốt quá trình hồi phục.",
+      "avatar": "https://images.unsplash.com/photo-1569925444984-9e2e5fc3d1fb?auto=format&fit=crop&w=100&q=60"
+    },
+    {
+      "name": "Khách hàng P.T.K",
+      "result": "Chăm sóc da Signature",
+      "quote": "Đến đây như một buổi nghỉ ngơi thực sự, không hề có cảm giác căng thẳng như phòng khám thông thường.",
+      "avatar": "https://images.unsplash.com/photo-1569925444984-9e2e5fc3d1fb?auto=format&fit=crop&w=100&q=60"
     }
   ],
-
-  contact: {
-    hotline: "1900 0306",
-    hotlineHref: "tel:19000306",
-    phone: "0909 415 066",
-    phoneHref: "tel:0909415066",
-    email: "service@thammythanhtuyen.vn",
-    facebookUrl: "https://www.facebook.com/ThamMyThanhTuyen",
-    zaloUrl: "https://zalo.me/0909415066",
-    mapEmbedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.2806154862687!2d106.68698219999999!3d10.789806500000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f7b83219e6b%3A0x628df03b9d51942!2sThanh%20Tuy%E1%BB%81n%20Signature!5e0!3m2!1svi!2s!4v1727442721507!5m2!1svi!2s"
-  },
-
-  addresses: [
-    { branch: "Thanh Tuyền Signature", address: "44 Huỳnh Tịnh Của, P.3, Q.3, TP.HCM" },
-    { branch: "Chi nhánh 1", address: "247 Đường 3/2, P.10, Q.10, TP.HCM" },
-    { branch: "Chi nhánh 2", address: "1661 Trần Hưng Đạo, Long Xuyên, An Giang" }
+  "blogPosts": [
+    {
+      "slug": "cham-soc-sau-nang-mui",
+      "title": "Hướng dẫn chăm sóc sau nâng mũi để lên form đẹp",
+      "excerpt": "Những lưu ý quan trọng trong 2 tuần đầu sau nâng mũi giúp vết thương mau lành và dáng mũi ổn định.",
+      "coverImage": "https://images.unsplash.com/photo-1662543701887-91f8f042a338?auto=format&fit=crop&w=1000&q=80",
+      "date": "2026-08-20",
+      "content": "[CẬP NHẬT] Nội dung bài viết đầy đủ. Cách xuống dòng đoạn văn: để 1 dòng trống giữa các đoạn trong ô nội dung ở trang Admin, hệ thống sẽ tự tách thành từng đoạn văn khi hiển thị.\n\nĐoạn thứ hai ví dụ ở đây."
+    },
+    {
+      "slug": "chon-dang-mui-phu-hop",
+      "title": "Làm sao chọn được dáng mũi phù hợp với gương mặt?",
+      "excerpt": "Không phải dáng mũi nào đẹp cũng phù hợp với mọi gương mặt — bác sĩ chia sẻ nguyên tắc chọn dáng mũi hài hoà.",
+      "coverImage": "https://images.unsplash.com/photo-1758448500688-3ababa93fd67?auto=format&fit=crop&w=1000&q=80",
+      "date": "2026-08-05",
+      "content": "[CẬP NHẬT] Nội dung bài viết đầy đủ."
+    }
   ],
-  workingHours: {
-    weekdayOpen: "08:00", weekdayClose: "19:30",
-    sundayOpen: "08:00", sundayClose: "17:00"
+  "contact": {
+    "hotline": "1900 0306",
+    "hotlineHref": "tel:19000306",
+    "phone": "0909 415 066",
+    "phoneHref": "tel:0909415066",
+    "email": "service@thammythanhtuyen.vn",
+    "facebookUrl": "https://www.facebook.com/ThamMyThanhTuyen",
+    "zaloUrl": "https://zalo.me/0909415066",
+    "mapEmbedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.2806154862687!2d106.68698219999999!3d10.789806500000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f7b83219e6b%3A0x628df03b9d51942!2sThanh%20Tuy%E1%BB%81n%20Signature!5e0!3m2!1svi!2s!4v1727442721507!5m2!1svi!2s"
   },
-
-  legal: [
+  "addresses": [
+    {
+      "branch": "Thanh Tuyền Signature",
+      "address": "44 Huỳnh Tịnh Của, P.3, Q.3, TP.HCM"
+    },
+    {
+      "branch": "Chi nhánh 1",
+      "address": "247 Đường 3/2, P.10, Q.10, TP.HCM"
+    },
+    {
+      "branch": "Chi nhánh 2",
+      "address": "1661 Trần Hưng Đạo, Long Xuyên, An Giang"
+    }
+  ],
+  "workingHours": {
+    "weekdayOpen": "08:00",
+    "weekdayClose": "19:30",
+    "sundayOpen": "Nghỉ",
+    "sundayClose": "Nghỉ"
+  },
+  "legal": [
     "CÔNG TY TNHH THANH TUYỀN SIGNATURE — GCN ĐKKD số 0318365757 · Giấy phép hoạt động khám chữa bệnh số 09524/HCM-GPHD (23/08/2024)",
     "CÔNG TY TNHH PHÒNG KHÁM CHUYÊN KHOA TẠO HÌNH THẨM MỸ THANH TUYỀN — GCN ĐKKD số 0313857498 · Giấy phép số 05539/HCM-GPHD (14/03/2013)"
   ],
-
-  /* ===== ĐẶT LỊCH — nối Google Sheet. Danh sách chi nhánh để chọn lấy từ "addresses" ở trên. ===== */
-  booking: {
-    apiUrl: "DÁN_WEB_APP_URL_VÀO_ĐÂY",
-    slotStepMinutes: 90
+  "booking": {
+    "apiUrl": "https://script.google.com/macros/s/AKfycbzkCnwrp2dF-Ray7-qJ2dQK61Dy1mIqa1HAHQELHKxgCZ_OlnxD4XgEd2hKPryKTMsn/exec",
+    "slotStepMinutes": 90
   }
 };
