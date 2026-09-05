@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bài viết — Thẩm Mỹ Thanh Tuyền</title>
+<link rel="icon" type="image/png" href="../assets/images/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@400;500;600;700&family=Be+Vietnam+Pro:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header>
+  <div class="nav-wrap">
+    <div class="logo" id="logoText"></div>
+    <nav><ul id="navLinks"></ul></nav>
+    <a href="#" id="navCta" class="btn btn-primary nav-cta">Đặt hẹn tư vấn 1:1</a>
+  </div>
+</header>
+
+<section class="page-hero" id="pageHero">
+  <div class="container page-hero-content reveal">
+    <span class="section-label" id="pageHeroTag" style="color:var(--accent-brass);"></span>
+    <h1 id="pageHeroTitle"></h1>
+  </div>
+</section>
+
+<div id="postRoot"></div>
+
+<section class="section alt">
+  <div class="container reveal" style="text-align:center;">
+    <a href="../blog/index.html" class="btn btn-outline">← Xem thêm bài viết khác</a>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h4 id="footerClinicName" style="font-family:var(--font-head); font-size:22px;"></h4>
+        <p id="footerTagline"></p>
+        <div class="social-row" id="socialRow"></div>
+      </div>
+      <div><h4>Hệ thống phòng khám</h4><ul id="footerAddresses"></ul></div>
+      <div><h4>Liên hệ</h4><ul id="footerContact"></ul></div>
+    </div>
+    <div class="legal-line" id="legalLine"></div>
+  </div>
+</footer>
+
+<script src="../assets/clinic-data.js"></script>
+<script src="../assets/site.js"></script>
+<script>
+  renderHeader('blog', '../');
+  initBlogPostPage('../');
+  renderFooter('../');
+</script>
+</body>
+</html>

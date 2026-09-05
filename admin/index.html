@@ -31,6 +31,7 @@
   .admin-save-bar h4{color:var(--accent-brass); font-family:var(--font-body); font-size:15px; margin-bottom:6px; font-weight:500;}
   .admin-save-bar p{font-size:13px; opacity:.85; margin-bottom:14px;}
   .admin-warn{background:rgba(122,46,42,.08); border:1px solid rgba(122,46,42,.25); border-radius:12px; padding:14px 16px; font-size:13px; color:var(--accent-wine); margin-bottom:16px;}
+  .admin-hint{font-size:12.5px; color:#8a7a6c; margin-bottom:16px;}
   details summary{cursor:pointer; font-size:14px; font-weight:500; padding:10px 0;}
   #ghStatus, #exportStatus{font-size:13px; margin-top:10px; min-height:16px;}
 </style>
@@ -56,8 +57,22 @@
 
   <!-- ===== TAB: DỊCH VỤ & GIÁ ===== -->
   <div class="admin-panel" data-panel="treatments">
+    <p class="admin-hint">Mỗi dịch vụ tự có 1 trang chi tiết riêng trên web (không cần tạo tay). Ảnh Trước/Sau sẽ hiện dạng kéo qua kéo lại — dùng ảnh thật của khách đã đồng ý công khai.</p>
     <div id="treatmentsList"></div>
     <button type="button" class="btn btn-outline admin-add" id="addTreatment">+ Thêm dịch vụ mới</button>
+  </div>
+
+  <!-- ===== TAB: VÌ SAO CHỌN CHÚNG TÔI ===== -->
+  <div class="admin-panel" data-panel="whyus">
+    <div id="whyList"></div>
+    <button type="button" class="btn btn-outline admin-add" id="addWhy">+ Thêm lý do</button>
+  </div>
+
+  <!-- ===== TAB: ĐỘI NGŨ BÁC SĨ ===== -->
+  <div class="admin-panel" data-panel="doctors">
+    <p class="admin-hint">Thêm bao nhiêu bác sĩ tuỳ ý — mỗi người hiện thành 1 thẻ riêng ở trang Giới thiệu.</p>
+    <div id="doctorsList"></div>
+    <button type="button" class="btn btn-outline admin-add" id="addDoctor">+ Thêm bác sĩ</button>
   </div>
 
   <!-- ===== TAB: LIÊN HỆ ===== -->
@@ -74,10 +89,15 @@
       </div>
       <div class="admin-field"><label>Link nhúng Google Maps (mục "Chia sẻ" → "Nhúng bản đồ" trên Google Maps, lấy phần URL trong src="...")</label><input id="c_mapEmbedUrl"></div>
     </div>
+    <div class="admin-card">
+      <label style="font-size:12.5px; font-weight:500; color:#5b4a3d; display:block; margin-bottom:5px;">Link Google Apps Script (Web App URL) cho tính năng đặt lịch</label>
+      <input id="b_apiUrl" placeholder="https://script.google.com/macros/s/xxxxx/exec">
+    </div>
   </div>
 
   <!-- ===== TAB: ĐỊA CHỈ & GIỜ MỞ CỬA ===== -->
   <div class="admin-panel" data-panel="addresses">
+    <p class="admin-hint">Danh sách chi nhánh ở đây cũng chính là danh sách để khách chọn khi đặt lịch ở trang Liên hệ.</p>
     <div id="addressesList"></div>
     <button type="button" class="btn btn-outline admin-add" id="addAddress">+ Thêm chi nhánh</button>
 
@@ -86,8 +106,8 @@
       <div class="admin-grid2">
         <div class="admin-field"><label>Giờ mở cửa — Thứ 2 đến Thứ 7</label><input id="wh_weekdayOpen" placeholder="08:00"></div>
         <div class="admin-field"><label>Giờ đóng cửa — Thứ 2 đến Thứ 7</label><input id="wh_weekdayClose" placeholder="19:30"></div>
-        <div class="admin-field"><label>Giờ mở cửa — Chủ nhật</label><input id="wh_sundayOpen" placeholder="08:00"></div>
-        <div class="admin-field"><label>Giờ đóng cửa — Chủ nhật</label><input id="wh_sundayClose" placeholder="17:00"></div>
+        <div class="admin-field"><label>Giờ mở cửa — Chủ nhật (ghi "Nghỉ" nếu đóng cửa)</label><input id="wh_sundayOpen" placeholder="08:00"></div>
+        <div class="admin-field"><label>Giờ đóng cửa — Chủ nhật (ghi "Nghỉ" nếu đóng cửa)</label><input id="wh_sundayClose" placeholder="17:00"></div>
       </div>
       <div class="admin-field" style="margin-top:8px;">
         <label>Khoảng cách giữa các khung giờ đặt lịch (phút — vd 90 = 1 tiếng 30)</label>
@@ -99,31 +119,17 @@
   <!-- ===== TAB: HÌNH ẢNH ===== -->
   <div class="admin-panel" data-panel="images">
     <div class="admin-card">
-      <p style="font-size:13px; color:#5b4a3d; margin-bottom:14px;">Dán link ảnh (Unsplash hoặc bất kỳ link ảnh https nào) vào từng ô bên dưới để thay ảnh tương ứng trên web.</p>
+      <p style="font-size:13px; color:#5b4a3d; margin-bottom:14px;">Dán link ảnh (Unsplash, ảnh tự upload, kể cả link xem file GitHub) vào từng ô bên dưới để thay ảnh tương ứng trên web.</p>
       <div class="admin-field"><label>Ảnh trang Giới thiệu (banner đầu trang)</label><input id="img_aboutHero"></div>
       <div class="admin-field"><label>Ảnh trang Liệu trình (banner đầu trang)</label><input id="img_treatmentsHero"></div>
       <div class="admin-field"><label>Ảnh trang Liên hệ (banner đầu trang)</label><input id="img_contactHero"></div>
+      <div class="admin-field"><label>Ảnh trang Blog (banner đầu trang)</label><input id="img_blogHero"></div>
       <div class="admin-field"><label>Ảnh không gian phòng khám (dùng ở Trang chủ)</label><input id="img_clinicSpace"></div>
     </div>
     <div class="admin-card">
-      <span class="section-label" style="margin-bottom:14px;">Ảnh slideshow Trang chủ (3 ảnh chuyển động)</span>
+      <span class="section-label" style="margin-bottom:14px;">Ảnh slideshow Trang chủ</span>
       <div id="heroSlidesList"></div>
     </div>
-  </div>
-
-  <!-- ===== TAB: ĐỘI NGŨ BÁC SĨ ===== -->
-  <div class="admin-panel" data-panel="doctor">
-    <div class="admin-card">
-      <div class="admin-grid2">
-        <div class="admin-field"><label>Tên bác sĩ</label><input id="d_name"></div>
-        <div class="admin-field"><label>Chức danh</label><input id="d_title"></div>
-      </div>
-      <div class="admin-field"><label>Ảnh bác sĩ (link)</label><input id="d_image"></div>
-      <div class="admin-field"><label>Giới thiệu ngắn</label><textarea id="d_bio" rows="2"></textarea></div>
-    </div>
-    <span class="section-label">Chứng chỉ / cam kết</span>
-    <div id="credentialsList"></div>
-    <button type="button" class="btn btn-outline admin-add" id="addCredential">+ Thêm mục</button>
   </div>
 
   <!-- ===== TAB: VIDEO YOUTUBE ===== -->
@@ -133,6 +139,13 @@
     </div>
     <div id="videosList"></div>
     <button type="button" class="btn btn-outline admin-add" id="addVideo">+ Thêm video</button>
+  </div>
+
+  <!-- ===== TAB: BLOG / TIN TỨC ===== -->
+  <div class="admin-panel" data-panel="blog">
+    <p class="admin-hint">Mỗi bài viết tự có trang riêng. Ô "Nội dung": để 1 dòng trống giữa các đoạn văn để web tự tách đoạn.</p>
+    <div id="blogList"></div>
+    <button type="button" class="btn btn-outline admin-add" id="addBlog">+ Thêm bài viết</button>
   </div>
 
   <!-- ===== TAB: CẢM NHẬN KHÁCH HÀNG ===== -->
@@ -151,7 +164,7 @@
     <details style="margin-top:22px;">
       <summary style="color:var(--accent-brass);">2. Cách nhanh hơn — lưu thẳng lên GitHub bằng 1 nút bấm (nâng cao)</summary>
       <div class="admin-warn" style="margin-top:12px;">
-        Cần tạo "Personal Access Token" trên GitHub 1 lần (xem hướng dẫn Claude gửi kèm bên dưới khung chat). Token giống như mật khẩu — không chia sẻ, không dùng máy công cộng. Token chỉ dùng cho trình duyệt này, không được lưu lại.
+        Cần tạo "Personal Access Token" trên GitHub 1 lần. Token giống như mật khẩu — không chia sẻ, không dùng máy công cộng. Token chỉ dùng cho trình duyệt này, không được lưu lại.
       </div>
       <div class="admin-grid2">
         <div class="admin-field"><label>Tên chủ tài khoản GitHub (owner)</label><input id="ghOwner" placeholder="vd: thanhtuyen-clinic"></div>
@@ -173,11 +186,13 @@ let data = JSON.parse(JSON.stringify(CLINIC_DATA));
 /* ===== TAB SWITCHING ===== */
 const tabs = [
   {id:'treatments', label:'Dịch vụ & giá'},
+  {id:'whyus', label:'Vì sao chọn chúng tôi'},
+  {id:'doctors', label:'Đội ngũ bác sĩ'},
   {id:'contact', label:'Liên hệ'},
   {id:'addresses', label:'Địa chỉ & giờ mở cửa'},
   {id:'images', label:'Hình ảnh'},
-  {id:'doctor', label:'Đội ngũ bác sĩ'},
   {id:'youtube', label:'Video Youtube'},
+  {id:'blog', label:'Blog / Tin tức'},
   {id:'testimonials', label:'Cảm nhận khách hàng'}
 ];
 const tabBar = document.getElementById('tabBar');
@@ -210,14 +225,11 @@ function normalizeImageUrl(url){
   if(!url) return url;
   url = url.trim();
 
-  // Link xem file trên GitHub: github.com/owner/repo/blob/branch/path hoặc /raw/branch/path
   let m = url.match(/^https?:\/\/github\.com\/([^\/]+)\/([^\/]+)\/(?:blob|raw)\/[^\/]+\/(.+?)(\?.*)?$/i);
   if(m) return `https://${m[1]}.github.io/${m[2]}/${m[3]}`;
 
-  // Link raw.githubusercontent.com: đã là link ảnh thật, giữ nguyên nhưng bỏ dấu cách/tham số thừa nếu có
   if(/^https?:\/\/raw\.githubusercontent\.com\//i.test(url)) return url;
 
-  // Google Drive chia sẻ dạng .../file/d/ID/view -> chuyển sang link xem ảnh trực tiếp
   m = url.match(/^https?:\/\/drive\.google\.com\/file\/d\/([^\/]+)\//i);
   if(m) return `https://drive.google.com/uc?export=view&id=${m[1]}`;
 
@@ -289,11 +301,30 @@ const treatmentsCtrl = renderRepeatable('treatmentsList', data.treatments, [
   {key:'duration', label:'Thời gian thực hiện'},
   {key:'technology', label:'Công nghệ / kỹ thuật sử dụng'},
   {key:'description', label:'Mô tả ngắn (hiện ở Trang chủ)', type:'textarea'},
-  {key:'longDescription', label:'Mô tả đầy đủ (hiện ở trang Liệu trình)', type:'textarea'},
+  {key:'longDescription', label:'Mô tả đầy đủ (hiện ở trang chi tiết)', type:'textarea'},
+  {key:'process', label:'Quy trình thực hiện (mỗi dòng 1 bước)', type:'textarea', rows:4, isList:true},
   {key:'idealFor', label:'Phù hợp với (mỗi dòng 1 ý)', type:'textarea', isList:true},
-  {key:'image', label:'Link ảnh', isImage:true}
-], ()=>({slug:'dich-vu-moi-'+Date.now(), name:'Dịch vụ mới', subtitle:'', description:'', longDescription:'', technology:'', duration:'', price:'', idealFor:[], image:''}));
+  {key:'beforeImage', label:'Ảnh TRƯỚC khi thực hiện', isImage:true},
+  {key:'afterImage', label:'Ảnh SAU khi thực hiện', isImage:true}
+], ()=>({slug:'dich-vu-'+Date.now(), name:'Dịch vụ mới', subtitle:'', description:'', longDescription:'', technology:'', duration:'', price:'', process:[], idealFor:[], beforeImage:'', afterImage:''}));
 document.getElementById('addTreatment').onclick = treatmentsCtrl.addNew;
+
+/* ===== VÌ SAO CHỌN CHÚNG TÔI ===== */
+const whyCtrl = renderRepeatable('whyList', data.whyChooseUs, [
+  {key:'title', label:'Tiêu đề'},
+  {key:'desc', label:'Mô tả', type:'textarea'}
+], ()=>({title:'Lý do mới', desc:''}));
+document.getElementById('addWhy').onclick = whyCtrl.addNew;
+
+/* ===== ĐỘI NGŨ BÁC SĨ ===== */
+const doctorsCtrl = renderRepeatable('doctorsList', data.doctors, [
+  {key:'name', label:'Tên bác sĩ'},
+  {key:'title', label:'Chức danh / chuyên môn'},
+  {key:'image', label:'Ảnh bác sĩ', isImage:true},
+  {key:'bio', label:'Giới thiệu ngắn', type:'textarea'},
+  {key:'highlights', label:'Điểm nổi bật (mỗi dòng 1 ý — bằng cấp, kinh nghiệm...)', type:'textarea', isList:true}
+], ()=>({name:'Bác sĩ mới', title:'', image:'', bio:'', highlights:[]}));
+document.getElementById('addDoctor').onclick = doctorsCtrl.addNew;
 
 /* ===== LIÊN HỆ ===== */
 bind('c_hotline', ()=>data.contact.hotline, v=>data.contact.hotline=v);
@@ -304,6 +335,7 @@ bind('c_email', ()=>data.contact.email, v=>data.contact.email=v);
 bind('c_facebookUrl', ()=>data.contact.facebookUrl, v=>data.contact.facebookUrl=v);
 bind('c_zaloUrl', ()=>data.contact.zaloUrl, v=>data.contact.zaloUrl=v);
 bind('c_mapEmbedUrl', ()=>data.contact.mapEmbedUrl, v=>data.contact.mapEmbedUrl=v);
+bind('b_apiUrl', ()=>data.booking.apiUrl, v=>data.booking.apiUrl=v);
 
 /* ===== ĐỊA CHỈ & GIỜ MỞ CỬA ===== */
 const addressesCtrl = renderRepeatable('addressesList', data.addresses, [
@@ -322,6 +354,7 @@ bind('b_slotStep', ()=>data.booking.slotStepMinutes, v=>data.booking.slotStepMin
 bindImage('img_aboutHero', ()=>data.images.aboutHero, v=>data.images.aboutHero=v);
 bindImage('img_treatmentsHero', ()=>data.images.treatmentsHero, v=>data.images.treatmentsHero=v);
 bindImage('img_contactHero', ()=>data.images.contactHero, v=>data.images.contactHero=v);
+bindImage('img_blogHero', ()=>data.images.blogHero, v=>data.images.blogHero=v);
 bindImage('img_clinicSpace', ()=>data.images.clinicSpace, v=>data.images.clinicSpace=v);
 
 const heroSlidesContainer = document.getElementById('heroSlidesList');
@@ -358,18 +391,6 @@ function drawHeroSlides(){
 }
 drawHeroSlides();
 
-/* ===== ĐỘI NGŨ BÁC SĨ ===== */
-bind('d_name', ()=>data.doctor.name, v=>data.doctor.name=v);
-bind('d_title', ()=>data.doctor.title, v=>data.doctor.title=v);
-bindImage('d_image', ()=>data.doctor.image, v=>data.doctor.image=v);
-bind('d_bio', ()=>data.doctor.bio, v=>data.doctor.bio=v);
-
-const credCtrl = renderRepeatable('credentialsList', data.doctor.credentials, [
-  {key:'title', label:'Tiêu đề'},
-  {key:'desc', label:'Mô tả', type:'textarea'}
-], ()=>({title:'Cam kết mới', desc:''}));
-document.getElementById('addCredential').onclick = credCtrl.addNew;
-
 /* ===== VIDEO YOUTUBE ===== */
 bind('yt_channelUrl', ()=>data.youtube.channelUrl, v=>data.youtube.channelUrl=v);
 const videosCtrl = renderRepeatable('videosList', data.youtube.videos, [
@@ -377,6 +398,17 @@ const videosCtrl = renderRepeatable('videosList', data.youtube.videos, [
   {key:'videoId', label:'Youtube Video ID (phần sau watch?v= trong link video)'}
 ], ()=>({title:'Video mới', videoId:''}));
 document.getElementById('addVideo').onclick = videosCtrl.addNew;
+
+/* ===== BLOG / TIN TỨC ===== */
+const blogCtrl = renderRepeatable('blogList', data.blogPosts, [
+  {key:'title', label:'Tiêu đề bài viết'},
+  {key:'slug', label:'Đường dẫn (chỉ chữ thường, số, dấu gạch ngang — không dấu, không khoảng trắng)'},
+  {key:'date', label:'Ngày đăng (dạng 2026-09-05)'},
+  {key:'coverImage', label:'Ảnh bìa', isImage:true},
+  {key:'excerpt', label:'Mô tả ngắn (hiện ở trang danh sách Blog)', type:'textarea'},
+  {key:'content', label:'Nội dung đầy đủ (để 1 dòng trống giữa các đoạn văn)', type:'textarea', rows:8}
+], ()=>({slug:'bai-viet-'+Date.now(), title:'Bài viết mới', excerpt:'', coverImage:'', date:new Date().toISOString().split('T')[0], content:''}));
+document.getElementById('addBlog').onclick = blogCtrl.addNew;
 
 /* ===== CẢM NHẬN KHÁCH HÀNG ===== */
 const testiCtrl = renderRepeatable('testimonialsList', data.testimonials, [

@@ -36,22 +36,22 @@
   </div>
 </section>
 
-<!-- ĐỘI NGŨ BÁC SĨ -->
-<section class="section alt" id="standards">
+<!-- VÌ SAO CHỌN CHÚNG TÔI -->
+<section class="section alt">
   <div class="container">
-    <span class="section-label reveal">Tiêu chuẩn y khoa</span>
-    <h2 class="section-title reveal">Đội ngũ bác sĩ & tiêu chuẩn vận hành</h2>
-    <div class="split-row">
-      <div class="split-img reveal">
-        <img id="doctorImg" src="" alt="Bác sĩ tại phòng khám">
-      </div>
-      <div class="reveal">
-        <h3 id="doctorName" style="font-size:28px;"></h3>
-        <p id="doctorTitle" style="color:var(--accent-terra); font-size:15px; margin-top:4px;"></p>
-        <p id="doctorBio" style="margin-top:14px; color:#5b4a3d;"></p>
-        <ul class="cred-list" id="credList"></ul>
-      </div>
-    </div>
+    <span class="section-label reveal">Vì sao chọn Thanh Tuyền</span>
+    <h2 class="section-title reveal">Điều làm nên sự khác biệt</h2>
+    <div class="why-grid" id="whyGrid"></div>
+  </div>
+</section>
+
+<!-- ĐỘI NGŨ BÁC SĨ -->
+<section class="section" id="standards">
+  <div class="container">
+    <span class="section-label reveal">Chuyên môn</span>
+    <h2 class="section-title reveal">Đội ngũ bác sĩ</h2>
+    <p class="section-sub reveal">Mỗi bác sĩ tại Thanh Tuyền đều trực tiếp thăm khám và đồng hành cùng khách hàng trong suốt quá trình thực hiện.</p>
+    <div class="doctor-grid" id="doctorGrid"></div>
   </div>
 </section>
 
@@ -97,11 +97,8 @@
   document.getElementById('storyParas').innerHTML = CLINIC_DATA.story.paragraphs
     .map(p=>`<p class="reveal" style="color:#5b4a3d; margin-bottom:14px; font-size:16px;">${p}</p>`).join('');
 
-  document.getElementById('doctorImg').src = CLINIC_DATA.doctor.image || CLINIC_DATA.images.aboutHero;
-  document.getElementById('doctorName').textContent = CLINIC_DATA.doctor.name;
-  document.getElementById('doctorTitle').textContent = CLINIC_DATA.doctor.title;
-  document.getElementById('doctorBio').textContent = CLINIC_DATA.doctor.bio;
-  renderDoctorCredentials('credList');
+  renderWhyChooseUs('whyGrid');
+  renderDoctors('doctorGrid');
 
   renderYoutube('videoGrid');
   renderFooter('../');

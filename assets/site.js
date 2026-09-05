@@ -1,7 +1,7 @@
 /* ================================================================
-   site.js — CODE HIỂN THỊ DÙNG CHUNG CHO CẢ 4 TRANG.
+   site.js — CODE HIỂN THỊ DÙNG CHUNG CHO TOÀN BỘ WEBSITE.
    Không cần chỉnh sửa file này. Muốn đổi nội dung, sửa trong
-   assets/clinic-data.js
+   assets/clinic-data.js hoặc qua trang /admin/
 ================================================================= */
 
 function iconSvg(name){
@@ -85,18 +85,69 @@ function initHeroSlider(){
   }, 5000);
 }
 
+/* ===== SLIDER TRƯỚC / SAU (kéo qua kéo lại) ===== */
+function renderBASlider(beforeSrc, afterSrc, altText, extraClass){
+  return `
+    <div class="ba-slider ${extraClass||''}">
+      <img class="ba-after" src="${afterSrc}" alt="${altText} - sau">
+      <div class="ba-before-wrap"><img class="ba-before" src="${beforeSrc}" alt="${altText} - trước"></div>
+      <div class="ba-handle">↔</div>
+      <span class="ba-label ba-label-before">Trước</span>
+      <span class="ba-label ba-label-after">Sau</span>
+    </div>`;
+}
+
+function initOneBASlider(el){
+  const wrap = el.querySelector('.ba-before-wrap');
+  const beforeImg = el.querySelector('.ba-before');
+  const handle = el.querySelector('.ba-handle');
+  if(!wrap || !beforeImg || !handle) return;
+
+  function syncWidth(){ beforeImg.style.width = el.offsetWidth + 'px'; }
+  function setPct(pct){
+    pct = Math.max(0, Math.min(100, pct));
+    wrap.style.width = pct + '%';
+    handle.style.left = pct + '%';
+  }
+  syncWidth();
+  setPct(50);
+  window.addEventListener('resize', syncWidth);
+
+  let dragging = false;
+  function moveTo(clientX){
+    const rect = el.getBoundingClientRect();
+    setPct(((clientX - rect.left) / rect.width) * 100);
+  }
+  handle.addEventListener('pointerdown', (e)=>{ dragging = true; handle.setPointerCapture(e.pointerId); e.preventDefault(); });
+  el.addEventListener('pointermove', (e)=>{ if(dragging) moveTo(e.clientX); });
+  window.addEventListener('pointerup', ()=> dragging = false);
+  el.addEventListener('pointerdown', (e)=>{ if(e.target === handle) return; moveTo(e.clientX); });
+}
+
+function initAllBASliders(){
+  document.querySelectorAll('.ba-slider:not([data-ba-init])').forEach(el=>{
+    el.setAttribute('data-ba-init','1');
+    initOneBASlider(el);
+  });
+}
+
+/* ===== DỊCH VỤ ===== */
 function renderTreatmentCard(t, opts){
   opts = opts || {};
+  const basePath = opts.basePath || '';
   const idealHtml = (opts.showIdeal && t.idealFor) ?
     `<ul class="ideal-list">${t.idealFor.map(x=>`<li>${x}</li>`).join('')}</ul>` : '';
   const desc = opts.long ? t.longDescription : t.description;
-  const bookHref = `${opts.basePath||''}contact/index.html?service=${encodeURIComponent(t.name)}#booking`;
+  const detailHref = `${basePath}treatments/detail.html?slug=${encodeURIComponent(t.slug)}`;
+  const bookHref = `${basePath}contact/index.html?service=${encodeURIComponent(t.name)}#booking`;
   return `
     <div class="treatment-card reveal">
-      <div class="img-wrap"><img src="${t.image}" alt="${t.name}"></div>
+      <a href="${detailHref}" class="img-wrap" style="cursor:pointer;">
+        ${renderBASlider(t.beforeImage, t.afterImage, t.name)}
+      </a>
       <div class="treatment-body">
         <span class="tag">${t.subtitle}</span>
-        <h3>${t.name}</h3>
+        <a href="${detailHref}"><h3>${t.name}</h3></a>
         <p>${desc}</p>
         ${idealHtml}
         <p style="font-size:13px;color:var(--accent-terra);">${t.technology}</p>
@@ -104,7 +155,8 @@ function renderTreatmentCard(t, opts){
           <span>${t.duration}</span>
           <span class="price">${t.price}</span>
         </div>
-        ${opts.showCta ? `<a href="${bookHref}" class="btn btn-outline" style="margin-top:14px; justify-content:center;">Tư vấn liệu trình này</a>` : ''}
+        <a href="${detailHref}" class="btn btn-outline" style="margin-top:14px; justify-content:center;">Xem chi tiết</a>
+        ${opts.showCta ? `<a href="${bookHref}" class="btn btn-primary" style="margin-top:8px; justify-content:center;">Tư vấn liệu trình này</a>` : ''}
       </div>
     </div>`;
 }
@@ -114,16 +166,80 @@ function renderTreatments(containerId, opts){
   if(!grid) return;
   const list = opts && opts.limit ? CLINIC_DATA.treatments.slice(0, opts.limit) : CLINIC_DATA.treatments;
   grid.innerHTML = list.map(t=>renderTreatmentCard(t, opts)).join('');
+  initAllBASliders();
 }
 
-function renderDoctorCredentials(containerId){
-  const list = document.getElementById(containerId);
-  if(!list) return;
-  CLINIC_DATA.doctor.credentials.forEach((c,i)=>{
-    const li = document.createElement('li');
-    li.innerHTML = `<div class="cred-dot">${i+1}</div><div><h4>${c.title}</h4><p>${c.desc}</p></div>`;
-    list.appendChild(li);
-  });
+/* Trang chi tiết 1 dịch vụ — đọc ?slug= trên URL */
+function initTreatmentDetailPage(basePath){
+  basePath = basePath || '../';
+  const params = new URLSearchParams(window.location.search);
+  const slug = params.get('slug');
+  const t = CLINIC_DATA.treatments.find(x=>x.slug === slug);
+  const root = document.getElementById('detailRoot');
+  if(!t){
+    root.innerHTML = `<div class="container section"><p>Không tìm thấy dịch vụ này. <a href="${basePath}treatments/index.html" style="color:var(--accent-wine); text-decoration:underline;">Quay lại danh sách liệu trình</a>.</p></div>`;
+    return;
+  }
+  document.title = `${t.name} — ${CLINIC_DATA.clinicName}`;
+  document.getElementById('pageHero').style.backgroundImage = `url('${CLINIC_DATA.images.treatmentsHero}')`;
+  document.getElementById('pageHeroTag').textContent = t.subtitle;
+  document.getElementById('pageHeroTitle').textContent = t.name;
+
+  const idealHtml = t.idealFor ? `
+    <h3 style="font-size:19px; margin:28px 0 10px;">Phù hợp với</h3>
+    <ul class="ideal-list">${t.idealFor.map(x=>`<li>${x}</li>`).join('')}</ul>` : '';
+
+  const processHtml = t.process ? `
+    <h3 style="font-size:19px; margin:28px 0 10px;">Quy trình thực hiện</h3>
+    <ul class="process-list">${t.process.map(step=>`<li><span>${step}</span></li>`).join('')}</ul>` : '';
+
+  root.innerHTML = `
+    <div class="container section">
+      <div class="reveal">${renderBASlider(t.beforeImage, t.afterImage, t.name, 'ba-slider-lg')}</div>
+      <div class="reveal detail-meta-grid">
+        <div><span class="label">Công nghệ</span><span class="value" style="font-size:14px;">${t.technology}</span></div>
+        <div><span class="label">Thời gian</span><span class="value">${t.duration}</span></div>
+        <div><span class="label">Chi phí</span><span class="value">${t.price}</span></div>
+      </div>
+      <div class="reveal" style="max-width:720px;">
+        <p style="font-size:17px; color:#4a382c;">${t.longDescription}</p>
+        ${processHtml}
+        ${idealHtml}
+      </div>
+      <div class="reveal" style="margin-top:36px;">
+        <a href="${basePath}contact/index.html?service=${encodeURIComponent(t.name)}#booking" class="btn btn-primary">Đặt hẹn tư vấn liệu trình này</a>
+      </div>
+    </div>`;
+  initAllBASliders();
+  initReveal();
+}
+
+/* ===== VÌ SAO CHỌN CHÚNG TÔI ===== */
+function renderWhyChooseUs(containerId){
+  const grid = document.getElementById(containerId);
+  if(!grid) return;
+  grid.innerHTML = CLINIC_DATA.whyChooseUs.map((r,i)=>`
+    <div class="why-card reveal">
+      <div class="cred-dot">${i+1}</div>
+      <h4>${r.title}</h4>
+      <p>${r.desc}</p>
+    </div>`).join('');
+}
+
+/* ===== ĐỘI NGŨ BÁC SĨ ===== */
+function renderDoctors(containerId){
+  const grid = document.getElementById(containerId);
+  if(!grid) return;
+  grid.innerHTML = CLINIC_DATA.doctors.map(d=>`
+    <div class="doctor-card reveal">
+      <div class="doc-img"><img src="${d.image}" alt="${d.name}"></div>
+      <div class="doc-body">
+        <h3>${d.name}</h3>
+        <span class="doc-title">${d.title}</span>
+        <p>${d.bio}</p>
+        ${d.highlights ? `<ul class="doc-highlights">${d.highlights.map(h=>`<li>${h}</li>`).join('')}</ul>` : ''}
+      </div>
+    </div>`).join('');
 }
 
 function renderTestimonials(containerId){
@@ -146,7 +262,7 @@ function renderYoutube(containerId){
   grid.innerHTML = CLINIC_DATA.youtube.videos.map(v=>{
     const isPlaceholder = !v.videoId || v.videoId.indexOf('DÁN_ID') !== -1;
     const frame = isPlaceholder
-      ? `<div class="video-placeholder">${iconSvg('play')}<span>Chưa gắn video thật —<br>dán YouTube video ID vào clinic-data.js</span></div>`
+      ? `<div class="video-placeholder">${iconSvg('play')}<span>Chưa gắn video thật —<br>dán YouTube video ID trong Admin</span></div>`
       : `<iframe src="https://www.youtube.com/embed/${v.videoId}" title="${v.title}" allowfullscreen></iframe>`;
     return `<div class="video-card reveal">
       <div class="video-frame-wrap">${frame}</div>
@@ -157,14 +273,54 @@ function renderYoutube(containerId){
     </div>`;
 }
 
+/* ===== BLOG / TIN TỨC ===== */
+function renderBlogList(containerId, opts){
+  const grid = document.getElementById(containerId);
+  if(!grid) return;
+  const basePath = (opts && opts.basePath) || '';
+  const sorted = [...CLINIC_DATA.blogPosts].sort((a,b)=> new Date(b.date) - new Date(a.date));
+  grid.innerHTML = sorted.map(p=>`
+    <a href="${basePath}blog/post.html?slug=${encodeURIComponent(p.slug)}" class="blog-card reveal">
+      <div class="blog-img"><img src="${p.coverImage}" alt="${p.title}"></div>
+      <div class="blog-body">
+        <span class="blog-date">${formatDateVN(p.date)}</span>
+        <h3>${p.title}</h3>
+        <p>${p.excerpt}</p>
+      </div>
+    </a>`).join('');
+}
+
+function formatDateVN(dateStr){
+  const d = new Date(dateStr + 'T00:00:00');
+  if(isNaN(d)) return dateStr;
+  return `${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}/${d.getFullYear()}`;
+}
+
+function initBlogPostPage(basePath){
+  basePath = basePath || '../';
+  const params = new URLSearchParams(window.location.search);
+  const slug = params.get('slug');
+  const p = CLINIC_DATA.blogPosts.find(x=>x.slug === slug);
+  const root = document.getElementById('postRoot');
+  if(!p){
+    root.innerHTML = `<div class="container section"><p>Không tìm thấy bài viết này. <a href="${basePath}blog/index.html" style="color:var(--accent-wine); text-decoration:underline;">Quay lại Blog</a>.</p></div>`;
+    return;
+  }
+  document.title = `${p.title} — ${CLINIC_DATA.clinicName}`;
+  document.getElementById('pageHero').style.backgroundImage = `url('${p.coverImage}')`;
+  document.getElementById('pageHeroTag').textContent = formatDateVN(p.date);
+  document.getElementById('pageHeroTitle').textContent = p.title;
+  const paragraphs = p.content.split(/\n\s*\n/).map(para=>`<p>${para.replace(/\n/g,'<br>')}</p>`).join('');
+  root.innerHTML = `<div class="container section"><div class="blog-post-content reveal">${paragraphs}</div></div>`;
+  initReveal();
+}
+
 /* ===== ĐẶT LỊCH — nối Google Sheet ===== */
 let selectedTime = null;
 
-/* Chuyển "08:00" -> 480 phút; ngược lại ở hàm bên dưới */
 function timeStrToMinutes(str){ const [h,m] = str.split(':').map(Number); return h*60+m; }
 function minutesToTimeStr(mins){ const h = Math.floor(mins/60), m = mins%60; return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`; }
 
-/* Lấy giờ mở/đóng cửa theo đúng ngày được chọn (Chủ nhật khác ngày thường) */
 function getHoursForDate(dateStr){
   const d = new Date(dateStr + 'T00:00:00');
   const isSunday = d.getDay() === 0;
@@ -233,10 +389,12 @@ async function onSubmitBooking(e){
   const date = document.getElementById('fDate').value;
   if(!selectedTime){ status.textContent = 'Vui lòng chọn một khung giờ.'; status.style.color = 'var(--accent-wine)'; return; }
 
+  const branchInput = document.querySelector('input[name="fBranch"]:checked');
   const payload = {
     name: document.getElementById('fName').value,
     phone: document.getElementById('fPhone').value,
     service: document.getElementById('fService').value,
+    branch: branchInput ? branchInput.value : '',
     date: date,
     time: selectedTime,
     note: document.getElementById('fNote').value
@@ -278,6 +436,17 @@ function populateServiceSelect(){
   if(preselect) sel.value = preselect;
 }
 
+/* Danh sách chi nhánh để khách chọn nơi đặt lịch — lấy trực tiếp từ CLINIC_DATA.addresses */
+function populateBranchSelect(){
+  const wrap = document.getElementById('branchGroup');
+  if(!wrap) return;
+  wrap.innerHTML = CLINIC_DATA.addresses.map((a,i)=>`
+    <label class="branch-radio">
+      <input type="radio" name="fBranch" value="${a.branch}" ${i===0?'checked':''}>
+      <span><span class="b-name">${a.branch}</span><br><span class="b-addr">${a.address}</span></span>
+    </label>`).join('');
+}
+
 function initBookingForm(){
   const dateInput = document.getElementById('fDate');
   if(!dateInput) return;
@@ -286,6 +455,7 @@ function initBookingForm(){
   dateInput.addEventListener('change', onDateChange);
   document.getElementById('bookingForm').addEventListener('submit', onSubmitBooking);
   populateServiceSelect();
+  populateBranchSelect();
 }
 
 function renderMap(containerId){
@@ -306,7 +476,7 @@ function renderBookingSidebar(containerId){
 
 /* ===== FADE-UP KHI CUỘN TRANG ===== */
 function initReveal(){
-  const items = document.querySelectorAll('.reveal');
+  const items = document.querySelectorAll('.reveal:not(.visible)');
   const observer = new IntersectionObserver((entries)=>{
     entries.forEach(entry=>{
       if(entry.isIntersecting){ entry.target.classList.add('visible'); observer.unobserve(entry.target); }
