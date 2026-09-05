@@ -142,9 +142,9 @@ function renderTreatmentCard(t, opts){
   const bookHref = `${basePath}contact/index.html?service=${encodeURIComponent(t.name)}#booking`;
   return `
     <div class="treatment-card reveal">
-      <a href="${detailHref}" class="img-wrap" style="cursor:pointer;">
+      <div class="img-wrap">
         ${renderBASlider(t.beforeImage, t.afterImage, t.name)}
-      </a>
+      </div>
       <div class="treatment-body">
         <span class="tag">${t.subtitle}</span>
         <a href="${detailHref}"><h3>${t.name}</h3></a>
